@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="emailTxt">e-mail</string>
+    <string name="showPasswordTxt">Show password</string>
+    <string name="registerTxt">Register</string>
+</resources>

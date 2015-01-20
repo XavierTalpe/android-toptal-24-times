@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_login">
+
+    <TextView
+        android:id="@+id/errorTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/usernameTxt"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:ems="20"
+        android:textColor="@android:color/holo_red_light"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/usernameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_above="@+id/passwordTxt"
+        android:hint="@string/usernameTxt"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/passwordTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_above="@+id/loginBtn"
+        android:hint="@string/passwordTxt"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loginTxt"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/registerTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginBtn"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:ems="20"
+        android:textColor="@android:color/holo_blue_bright"
+        android:text="@string/registerHereTxt"/>
+
+
+</RelativeLayout>

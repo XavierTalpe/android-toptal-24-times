@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_login">
+
+    <TextView
+        android:id="@+id/errorTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/emailTxt"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:ems="20"
+        android:textColor="@android:color/holo_red_light"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/emailTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_above="@+id/passwordTxt"
+        android:hint="@string/emailTxt"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/passwordTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_above="@+id/showPasswordCbx"
+        android:hint="@string/passwordTxt"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/showPasswordCbx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/showPasswordTxt"
+        android:layout_above="@+id/registerBtn"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/registerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registerTxt"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

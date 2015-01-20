@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="usernameTxt">username or e-mail</string>
+    <string name="passwordTxt">password</string>
+    <string name="loginTxt">Login</string>
+    <string name="registerHereTxt">New user? Register here</string>
+</resources>
