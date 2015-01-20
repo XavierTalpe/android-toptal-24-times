@@ -1,4 +1,4 @@
-package be.xvrt.clocks.app.view;
+package be.xvrt.times.view;
 
 import android.app.Fragment;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package be.xvrt.clocks.app.view;
+package be.xvrt.times.view;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;

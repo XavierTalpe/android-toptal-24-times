@@ -1,4 +1,4 @@
-package be.xvrt.clocks.app;
+package be.xvrt.times;
 
 import com.parse.ParseUser;
 
@@ -8,9 +8,10 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import be.xvrt.clocks.app.util.ParseUtil;
-import be.xvrt.clocks.app.view.LoginFragment;
-import be.xvrt.clocks.app.view.ShowClocksFragment;
+import be.xvrt.clocks.app.R;
+import be.xvrt.times.util.ParseUtil;
+import be.xvrt.times.view.LoginFragment;
+import be.xvrt.times.view.ShowClocksFragment;
 
 
 public class Main extends Activity {

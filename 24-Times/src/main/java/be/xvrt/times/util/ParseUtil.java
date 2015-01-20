@@ -1,4 +1,4 @@
-package be.xvrt.clocks.app.util;
+package be.xvrt.times.util;
 
 import com.parse.Parse;
 
