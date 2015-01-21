@@ -23,12 +23,8 @@ public class Main extends Activity {
         setContentView(R.layout.activity_main);
 
         ActionBar actionBar = getActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.hide();
-
-        if (savedInstanceState == null) { // TODO: Ensure ShowClocksFragment isn't added again in every onstart.
-        }
 
         ParseUtil.initParse(this);
     }
