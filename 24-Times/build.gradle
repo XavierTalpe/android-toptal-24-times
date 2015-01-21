@@ -18,7 +18,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "be.xvrt.clocks.app"
+        applicationId "be.xvrt.times"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1

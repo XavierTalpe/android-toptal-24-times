@@ -1,5 +1,6 @@
 package be.xvrt.times.view;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,16 @@ public class ShowClocksFragment extends Fragment {
         TextView viewById = (TextView) rootView.findViewById(R.id.text_view);
         viewById.setText("Xavier Is logged in!");
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        ActionBar actionBar = getActivity().getActionBar();
+        if (actionBar != null && !actionBar.isShowing()) {
+            actionBar.show();
+        }
     }
 
 }

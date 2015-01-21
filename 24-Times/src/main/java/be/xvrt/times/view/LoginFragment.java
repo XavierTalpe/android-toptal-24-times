@@ -4,6 +4,7 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -36,6 +37,16 @@ public final class LoginFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        ActionBar actionBar = getActivity().getActionBar();
+        if (actionBar != null && actionBar.isShowing()) {
+            actionBar.hide();
+        }
+    }
+
     @OnClick(R.id.loginBtn)
     void handleLogin() {
         errorView.setVisibility(View.INVISIBLE);
@@ -48,17 +59,25 @@ public final class LoginFragment extends Fragment {
             @Override
             public void done(ParseUser user, ParseException exception) {
                 if (user == null) {
-                    errorView.setText(exception.getMessage());
-                    errorView.setVisibility(View.VISIBLE);
+                    setErrorMessage(exception.getMessage());
                 } else {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    //                    fragmentManager.popBackStack();
-                    fragmentManager.beginTransaction()
-                                   .replace(R.id.container, new ShowClocksFragment())
-                                   .commit();
+                    moveToRegistration();
                 }
             }
         });
+    }
+
+    private void setErrorMessage(String message) {
+        errorView.setText(message);
+        errorView.setVisibility(View.VISIBLE);
+    }
+
+    private void moveToRegistration() {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStack();
+        fragmentManager.beginTransaction()
+                       .replace(R.id.container, new ShowClocksFragment())
+                       .commit();
     }
 
     @OnClick(R.id.registerTxt)

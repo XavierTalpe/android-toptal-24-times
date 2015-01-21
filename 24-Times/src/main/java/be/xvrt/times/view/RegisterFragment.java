@@ -4,6 +4,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -40,6 +41,16 @@ public final class RegisterFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        ActionBar actionBar = getActivity().getActionBar();
+        if (actionBar != null && actionBar.isShowing()) {
+            actionBar.hide();
+        }
+    }
+
     @OnCheckedChanged(R.id.showPasswordCbx)
     void toggleShowPassword() {
         TransformationMethod currentTransformationMethod = passwordView.getTransformationMethod();
@@ -66,15 +77,23 @@ public final class RegisterFragment extends Fragment {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException exception) {
                 if (exception == null) {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.popBackStack();
-                    fragmentManager.beginTransaction().replace(R.id.container, new ShowClocksFragment()).commit();
+                    goToMain();
                 } else {
-                    errorView.setText(exception.getMessage());
-                    errorView.setVisibility(View.VISIBLE);
+                    setErrorMessage(exception.getMessage());
                 }
             }
         });
+    }
+
+    private void setErrorMessage(String message) {
+        errorView.setText(message);
+        errorView.setVisibility(View.VISIBLE);
+    }
+
+    private void goToMain() {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStack();
+        fragmentManager.beginTransaction().replace(R.id.container, new ShowClocksFragment()).commit();
     }
 
 }
