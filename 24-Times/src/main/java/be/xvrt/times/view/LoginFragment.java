@@ -61,7 +61,7 @@ public final class LoginFragment extends Fragment {
                 if (user == null) {
                     setErrorMessage(exception.getMessage());
                 } else {
-                    moveToRegistration();
+                    handleLoginSuccess();
                 }
             }
         });
@@ -72,11 +72,11 @@ public final class LoginFragment extends Fragment {
         errorView.setVisibility(View.VISIBLE);
     }
 
-    private void moveToRegistration() {
+    private void handleLoginSuccess() {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack();
         fragmentManager.beginTransaction()
-                       .replace(R.id.container, new ShowClocksFragment())
+                       .replace(R.id.container, new ShowClocksFragment(), "main")
                        .commit();
     }
 
@@ -84,7 +84,7 @@ public final class LoginFragment extends Fragment {
     void handleRegister() {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                       .replace(R.id.container, new RegisterFragment())
+                       .replace(R.id.container, new RegisterFragment(), "register")
                        .addToBackStack(null)
                        .commit();
     }

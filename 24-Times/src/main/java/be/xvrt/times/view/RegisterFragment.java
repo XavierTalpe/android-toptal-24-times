@@ -77,7 +77,7 @@ public final class RegisterFragment extends Fragment {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException exception) {
                 if (exception == null) {
-                    goToMain();
+                    handleLoginSuccess();
                 } else {
                     setErrorMessage(exception.getMessage());
                 }
@@ -90,10 +90,12 @@ public final class RegisterFragment extends Fragment {
         errorView.setVisibility(View.VISIBLE);
     }
 
-    private void goToMain() {
+    private void handleLoginSuccess() {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack();
-        fragmentManager.beginTransaction().replace(R.id.container, new ShowClocksFragment()).commit();
+        fragmentManager.beginTransaction()
+                       .replace(R.id.container, new ShowClocksFragment(), "main")
+                       .commit();
     }
 
 }
