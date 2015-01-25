@@ -7,10 +7,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import be.xvrt.times.controller.NewClockController;
+import be.xvrt.times.controller.EditClockController;
 import be.xvrt.times.util.FragmentUtil;
 import be.xvrt.times.view.LoginFragment;
-import be.xvrt.times.view.NewClockDialog;
+import be.xvrt.times.view.EditClockDialog;
 import be.xvrt.times.view.ShowClocksFragment;
 
 
@@ -50,9 +50,9 @@ public class Main extends Activity {
 
         switch (item.getItemId()) {
             case R.id.addClockMenu:
-                NewClockDialog newClockDialog = new NewClockDialog();
-                newClockDialog.setResultListener(new NewClockController(this));
-                newClockDialog.show(getFragmentManager(), null);
+                EditClockDialog editClockDialog = new EditClockDialog();
+                editClockDialog.setResultListener(new EditClockController(this));
+                editClockDialog.show(getFragmentManager(), null);
 
                 result = true;
                 break;

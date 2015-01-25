@@ -19,20 +19,30 @@ import be.xvrt.times.model.Clock;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public final class NewClockDialog extends DialogFragment {
+public final class EditClockDialog extends DialogFragment {
 
-    private ClockCreationListener mListener;
+    private Clock editObject;
 
-    public NewClockDialog() {
+    private ClockEditListener listener;
+
+    public EditClockDialog() {
     }
 
-    public void setResultListener(ClockCreationListener listener) {
-        mListener = listener;
+    public void setEditObject(Clock editObject) {
+        this.editObject = editObject;
     }
 
-    private void notifyListeners(Clock newClock) {
-        if (mListener != null) {
-            mListener.onClockCreatedListener(newClock);
+    public void setResultListener(ClockEditListener listener) {
+        this.listener = listener;
+    }
+
+    private void notifyListeners(Clock clock) {
+        if (listener != null) {
+            if (editObject == null) {
+                listener.onClockCreatedListener(clock);
+            } else {
+                listener.onClockUpdatedListener(clock);
+            }
         }
     }
 
@@ -41,10 +51,12 @@ public final class NewClockDialog extends DialogFragment {
         final Activity activity = getActivity();
 
         final View dialogView = createDialogView(activity);
+
+        // TODO: title
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(dialogView);
-        builder.setNegativeButton(R.string.cancelCreate, new DialogDismissOnClickListener());
-        builder.setPositiveButton(R.string.createClock, new DialogDismissOnClickListener() {
+        builder.setNegativeButton(R.string.cancelEdit, new DialogDismissOnClickListener());
+        builder.setPositiveButton(R.string.editClockOK, new DialogDismissOnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 super.onClick(dialog, which);
@@ -61,25 +73,37 @@ public final class NewClockDialog extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        mListener = null;
+        listener = null;
+        editObject = null;
     }
 
     private View createDialogView(Activity activity) {
         LayoutInflater inflater = activity.getLayoutInflater();
 
-        View dialogView = inflater.inflate(R.layout.new_clock_dialog, null);
+        View dialogView = inflater.inflate(R.layout.edit_clock_dialog, null);
         dialogView.setTag(new ViewLookupTable(dialogView));
 
-        populateView(dialogView);
+        populateDefaultView(dialogView);
+        if (editObject != null) {
+            populateWithObject(dialogView, editObject);
+        }
 
         return dialogView;
     }
 
-    private void populateView(View dialogView) {
+    private void populateDefaultView(View dialogView) {
         ViewLookupTable lookupTable = (ViewLookupTable) dialogView.getTag();
 
         BaseAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.timezones, android.R.layout.simple_spinner_item);
         lookupTable.timezoneLst.setAdapter(adapter);
+    }
+
+    private void populateWithObject(View dialogView, Clock editObject) {
+        ViewLookupTable lookupTable = (ViewLookupTable) dialogView.getTag();
+
+        lookupTable.cityTxt.setText(editObject.getCity());
+        // TODO
+        //        lookupTable.timezoneLst.setSelection(editObject.getCity());
     }
 
     private Clock extractClock(View dialogView) {
@@ -87,16 +111,18 @@ public final class NewClockDialog extends DialogFragment {
         TextView cityTxt = lookupTable.cityTxt;
         Spinner timezoneLst = lookupTable.timezoneLst;
 
-        Clock clock = new Clock();
+        Clock clock = editObject == null ? new Clock() : editObject;
         clock.setCity(cityTxt.getText().toString());
         clock.setTimezone(timezoneLst.getSelectedItem().toString());
 
         return clock;
     }
 
-    public interface ClockCreationListener {
+    public interface ClockEditListener {
 
         public void onClockCreatedListener(Clock newClock);
+
+        public void onClockUpdatedListener(Clock updatedClock);
 
     }
 

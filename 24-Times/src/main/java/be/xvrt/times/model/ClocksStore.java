@@ -38,12 +38,14 @@ public final class ClocksStore {
     public void clear() {
         for (Clock clock : clocks) {
             clock.deleteEventually();
+            clock.deleteInBackground();
         }
 
         clocks.clear();
 
         user.put(KEY_ALL_CLOCKS, clocks);
         user.saveEventually();
+        user.saveInBackground();
     }
 
     public int getCount() {
@@ -55,16 +57,21 @@ public final class ClocksStore {
     }
 
     public void add(Clock clock) {
+        clock.pinInBackground();
+
         clocks.add(clock);
 
         user.put(KEY_ALL_CLOCKS, clocks);
         user.saveEventually();
+        user.saveInBackground();
 
         notifyListeners();
     }
 
     public void update(Clock clock) {
+        clock.pinInBackground();
         clock.saveEventually();
+        clock.saveInBackground();
 
         notifyListeners();
     }
@@ -74,6 +81,7 @@ public final class ClocksStore {
 
         user.put(KEY_ALL_CLOCKS, clocks);
         user.saveEventually();
+        user.saveInBackground();
 
         notifyListeners();
     }

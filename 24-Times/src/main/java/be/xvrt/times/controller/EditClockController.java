@@ -5,14 +5,14 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import be.xvrt.times.model.Clock;
 import be.xvrt.times.model.ClocksStore;
-import be.xvrt.times.view.NewClockDialog.ClockCreationListener;
+import be.xvrt.times.view.EditClockDialog.ClockEditListener;
 import be.xvrt.times.view.ShowClocksFragment;
 
-public final class NewClockController implements ClockCreationListener {
+public final class EditClockController implements ClockEditListener {
 
     private final ClocksStore clocksStore;
 
-    public NewClockController(Activity activity) {
+    public EditClockController(Activity activity) {
         FragmentManager fragmentManager = activity.getFragmentManager();
         Fragment showClocksFragment = fragmentManager.findFragmentByTag(ShowClocksFragment.TAG);
 
@@ -28,6 +28,11 @@ public final class NewClockController implements ClockCreationListener {
         if (clocksStore != null) {
             clocksStore.add(newClock);
         }
+    }
+
+    @Override
+    public void onClockUpdatedListener(Clock updatedClock) {
+        clocksStore.update(updatedClock);
     }
 
 }
