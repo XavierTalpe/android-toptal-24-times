@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import be.xvrt.clocks.app.R;
 import be.xvrt.times.util.FragmentUtil;
 import be.xvrt.times.util.ParseUtil;
 import be.xvrt.times.view.LoginFragment;

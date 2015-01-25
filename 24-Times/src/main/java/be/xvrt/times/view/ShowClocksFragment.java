@@ -1,22 +1,36 @@
 package be.xvrt.times.view;
 
+import com.parse.ParseUser;
+
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import be.xvrt.clocks.app.R;
+import android.widget.ListView;
+import be.xvrt.times.R;
+import be.xvrt.times.model.ClocksStore;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class ShowClocksFragment extends Fragment {
 
+    private ClocksStore clocksStore;
+
+    @InjectView(R.id.clocksLst)
+    ListView clocksList;
+
+    public ShowClocksFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_show_clocks, container, false);
-        TextView viewById = (TextView) rootView.findViewById(R.id.text_view);
-        viewById.setText("Xavier Is logged in!");
-        return rootView;
+        View view = inflater.inflate(R.layout.show_clocks_fragment, container, false);
+
+        ButterKnife.inject(this, view);
+
+        return view;
     }
 
     @Override
@@ -27,6 +41,17 @@ public class ShowClocksFragment extends Fragment {
         if (actionBar != null && !actionBar.isShowing()) {
             actionBar.show();
         }
+
+        clocksStore = new ClocksStore(ParseUser.getCurrentUser());
+        clocksList.setAdapter(new ClocksAdapter(clocksStore));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        clocksStore = null;
+        clocksList.setAdapter(null);
     }
 
 }

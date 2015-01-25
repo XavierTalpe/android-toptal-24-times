@@ -2,7 +2,7 @@ package be.xvrt.times.util;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import be.xvrt.clocks.app.R;
+import be.xvrt.times.R;
 
 public final class FragmentUtil {
 

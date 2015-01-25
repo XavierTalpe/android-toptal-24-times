@@ -7,10 +7,12 @@ buildscript {
         classpath 'com.android.tools.build:gradle:0.14.2'
     }
 }
+
 apply plugin: 'com.android.application'
 
 repositories {
     jcenter()
+    mavenCentral()
 }
 
 android {
@@ -18,12 +20,13 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "be.xvrt.times"
+        applicationId 'be.xvrt.times'
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName '1.0'
     }
+
     buildTypes {
         release {
             minifyEnabled false
