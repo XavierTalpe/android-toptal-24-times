@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-// TODO: Tags for every fragment.
 public final class LoginFragment extends Fragment {
 
     public static final String TAG = "Login";

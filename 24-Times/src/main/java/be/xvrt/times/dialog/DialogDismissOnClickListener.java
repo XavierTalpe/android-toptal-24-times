@@ -4,9 +4,9 @@ import android.content.DialogInterface;
 
 public class DialogDismissOnClickListener implements DialogInterface.OnClickListener {
 
-  @Override
-  public void onClick( DialogInterface dialog, int which ) {
-    dialog.dismiss();
-  }
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
+    }
 
 }
