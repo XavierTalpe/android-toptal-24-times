@@ -7,9 +7,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import be.xvrt.times.controller.NewClockController;
 import be.xvrt.times.util.FragmentUtil;
 import be.xvrt.times.util.ParseUtil;
 import be.xvrt.times.view.LoginFragment;
+import be.xvrt.times.view.NewClockDialog;
 import be.xvrt.times.view.ShowClocksFragment;
 
 
@@ -41,7 +43,7 @@ public class Main extends Activity {
         if (ParseUser.getCurrentUser() == null) {
             FragmentUtil.addOnlyOnce(getFragmentManager(), new LoginFragment(), "login");
         } else {
-            FragmentUtil.addOnlyOnce(getFragmentManager(), new ShowClocksFragment(), "main");
+            FragmentUtil.addOnlyOnce(getFragmentManager(), new ShowClocksFragment(), ShowClocksFragment.TAG);
         }
     }
 
@@ -50,8 +52,16 @@ public class Main extends Activity {
         boolean result = false;
 
         switch (item.getItemId()) {
+            case R.id.addClockMenu:
+                NewClockDialog newClockDialog = new NewClockDialog();
+                newClockDialog.setResultListener(new NewClockController(this));
+                newClockDialog.show(getFragmentManager(), "addClockDialog");
+
+                result = true;
+                break;
             case R.id.logoutMenu:
                 logout();
+
                 result = true;
                 break;
         }
@@ -63,7 +73,7 @@ public class Main extends Activity {
         ParseUser.logOut();
 
         getFragmentManager().beginTransaction()
-                            .replace(R.id.container, new LoginFragment())
+                            .replace(R.id.main_fragment_container, new LoginFragment())
                             .commit();
     }
 

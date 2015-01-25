@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
+// TODO: Tags for every fragment.
 public final class LoginFragment extends Fragment {
 
     @InjectView(R.id.errorTxt)
@@ -76,7 +77,7 @@ public final class LoginFragment extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack();
         fragmentManager.beginTransaction()
-                       .replace(R.id.container, new ShowClocksFragment(), "main")
+                       .replace(R.id.main_fragment_container, new ShowClocksFragment(), ShowClocksFragment.TAG)
                        .commit();
     }
 
@@ -84,7 +85,7 @@ public final class LoginFragment extends Fragment {
     void handleRegister() {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                       .replace(R.id.container, new RegisterFragment(), "register")
+                       .replace(R.id.main_fragment_container, new RegisterFragment(), "register")
                        .addToBackStack(null)
                        .commit();
     }

@@ -13,8 +13,6 @@ public final class ClocksStore {
 
     private final List<ClocksStoreListener> listeners;
 
-    // TODO: Should have add/delete methods that delegate to REST store
-
     public ClocksStore(ParseUser user) {
         this.user = user;
         this.clocks = getClocksFromServer(user);
@@ -38,10 +36,6 @@ public final class ClocksStore {
         return clocks;
     }
 
-    public int getCount() {
-        return clocks.size();
-    }
-
     public void clear() {
         for (Clock clock : clocks) {
             clock.deleteInBackground();
@@ -49,6 +43,14 @@ public final class ClocksStore {
 
         clocks.clear();
         user.saveInBackground();
+    }
+
+    public int getCount() {
+        return clocks.size();
+    }
+
+    public Clock getClock( int index) {
+        return clocks.get(index);
     }
 
     public void add(Clock clock) {

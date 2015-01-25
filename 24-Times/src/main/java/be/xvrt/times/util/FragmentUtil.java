@@ -15,7 +15,7 @@ public final class FragmentUtil {
         Fragment existingFragment = fragmentManager.findFragmentByTag(tag);
         if (existingFragment == null) {
             fragmentManager.beginTransaction()
-                           .add(R.id.container, fragment, tag)
+                           .add(R.id.main_fragment_container, fragment, tag)
                            .commit();
         }
     }

@@ -94,7 +94,7 @@ public final class RegisterFragment extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack();
         fragmentManager.beginTransaction()
-                       .replace(R.id.container, new ShowClocksFragment(), "main")
+                       .replace(R.id.main_fragment_container, new ShowClocksFragment(), ShowClocksFragment.TAG)
                        .commit();
     }
 

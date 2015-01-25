@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="createClock">OK</string>
+    <string name="cancelCreate">Cancel</string>
+
+    <string-array name="timezones">
+        <item>GMT+1</item>
+        <item>GMT+2</item>
+    </string-array>
+
+</resources>

@@ -14,7 +14,9 @@ import be.xvrt.times.model.ClocksStore;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ShowClocksFragment extends Fragment {
+public final class ShowClocksFragment extends Fragment {
+
+    public static final String TAG = "ShowClocks";
 
     private ClocksStore clocksStore;
 
@@ -22,6 +24,10 @@ public class ShowClocksFragment extends Fragment {
     ListView clocksList;
 
     public ShowClocksFragment() {
+    }
+
+    public ClocksStore getClocksStore() {
+        return clocksStore;
     }
 
     @Override
@@ -43,7 +49,7 @@ public class ShowClocksFragment extends Fragment {
         }
 
         clocksStore = new ClocksStore(ParseUser.getCurrentUser());
-        clocksList.setAdapter(new ClocksAdapter(clocksStore));
+        clocksList.setAdapter(new ClocksAdapter(getActivity(), clocksStore));
     }
 
     @Override
