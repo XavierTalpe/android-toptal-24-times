@@ -10,7 +10,6 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 import be.xvrt.times.model.ClocksStore.ClocksStoreListener;
 import be.xvrt.times.uil.ParseTestUtil;
-import be.xvrt.times.util.ParseUtil;
 
 public class ClocksStoreTest extends ApplicationTestCase<Application> {
 
@@ -27,8 +26,6 @@ public class ClocksStoreTest extends ApplicationTestCase<Application> {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-
-        ParseUtil.initParse(getContext());
 
         ParseUser user = ParseTestUtil.getTestUser();
         clocksStore = new ClocksStore(user);

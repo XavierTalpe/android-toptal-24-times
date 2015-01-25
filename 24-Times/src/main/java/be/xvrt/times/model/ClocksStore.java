@@ -8,6 +8,7 @@ import com.parse.ParseUser;
 // TODO: Try everything from UI thread.
 public final class ClocksStore {
 
+    public static final String KEY_ALL_CLOCKS = "clocks";
     private final ParseUser user;
     private final List<Clock> clocks;
 
@@ -15,22 +16,20 @@ public final class ClocksStore {
 
     public ClocksStore(ParseUser user) {
         this.user = user;
-        this.clocks = getClocksFromServer(user);
+        this.user.pinInBackground();
 
-        listeners = new ArrayList<ClocksStoreListener>();
+        this.clocks = getClocksFromServer(user);
+        this.listeners = new ArrayList<ClocksStoreListener>();
     }
 
     private List<Clock> getClocksFromServer(ParseUser user) {
-        List<Clock> clocks = user.getList("clocks");
+        List<Clock> clocks = user.getList(KEY_ALL_CLOCKS);
         if (clocks == null) {
             // TODO: Move
             //            Clock exampleClock = new Clock("GMT+1", "Brussels");
             //
             //            clocks.add(exampleClock);
             clocks = new ArrayList<Clock>();
-
-            user.add("clocks", clocks);
-            user.saveInBackground();
         }
 
         return clocks;
@@ -38,33 +37,34 @@ public final class ClocksStore {
 
     public void clear() {
         for (Clock clock : clocks) {
-            clock.deleteInBackground();
+            clock.deleteEventually();
         }
 
         clocks.clear();
-        user.saveInBackground();
+
+        user.put(KEY_ALL_CLOCKS, clocks);
+        user.saveEventually();
     }
 
     public int getCount() {
         return clocks.size();
     }
 
-    public Clock getClock( int index) {
+    public Clock getClock(int index) {
         return clocks.get(index);
     }
 
     public void add(Clock clock) {
         clocks.add(clock);
 
-        clock.saveInBackground();
-        user.saveInBackground();
+        user.put(KEY_ALL_CLOCKS, clocks);
+        user.saveEventually();
 
         notifyListeners();
     }
 
     public void update(Clock clock) {
-        clock.saveInBackground();
-        user.saveInBackground();
+        clock.saveEventually();
 
         notifyListeners();
     }
@@ -72,8 +72,8 @@ public final class ClocksStore {
     public void remove(Clock clock) {
         clocks.remove(clock);
 
-        user.saveInBackground();
-        clock.deleteInBackground();
+        user.put(KEY_ALL_CLOCKS, clocks);
+        user.saveEventually();
 
         notifyListeners();
     }

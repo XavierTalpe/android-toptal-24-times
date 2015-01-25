@@ -23,6 +23,8 @@ import butterknife.OnClick;
 
 public final class RegisterFragment extends Fragment {
 
+    public static final String TAG = "Register";
+
     @InjectView(R.id.errorTxt)
     TextView errorView;
 

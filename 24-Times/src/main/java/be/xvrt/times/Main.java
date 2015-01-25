@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import be.xvrt.times.controller.NewClockController;
 import be.xvrt.times.util.FragmentUtil;
-import be.xvrt.times.util.ParseUtil;
 import be.xvrt.times.view.LoginFragment;
 import be.xvrt.times.view.NewClockDialog;
 import be.xvrt.times.view.ShowClocksFragment;
@@ -26,8 +25,6 @@ public class Main extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.hide();
-
-        ParseUtil.initParse(this);
     }
 
     @Override
@@ -41,7 +38,7 @@ public class Main extends Activity {
         super.onStart();
 
         if (ParseUser.getCurrentUser() == null) {
-            FragmentUtil.addOnlyOnce(getFragmentManager(), new LoginFragment(), "login");
+            FragmentUtil.addOnlyOnce(getFragmentManager(), new LoginFragment(), LoginFragment.TAG);
         } else {
             FragmentUtil.addOnlyOnce(getFragmentManager(), new ShowClocksFragment(), ShowClocksFragment.TAG);
         }
@@ -55,7 +52,7 @@ public class Main extends Activity {
             case R.id.addClockMenu:
                 NewClockDialog newClockDialog = new NewClockDialog();
                 newClockDialog.setResultListener(new NewClockController(this));
-                newClockDialog.show(getFragmentManager(), "addClockDialog");
+                newClockDialog.show(getFragmentManager(), null);
 
                 result = true;
                 break;
@@ -69,6 +66,7 @@ public class Main extends Activity {
         return result || super.onOptionsItemSelected(item);
     }
 
+    // TODO: Refactor into controller
     private void logout() {
         ParseUser.logOut();
 

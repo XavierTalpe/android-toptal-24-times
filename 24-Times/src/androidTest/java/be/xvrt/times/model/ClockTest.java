@@ -6,19 +6,11 @@ import com.parse.ParseException;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
-import be.xvrt.times.util.ParseUtil;
 
 public class ClockTest extends ApplicationTestCase<Application> {
 
     public ClockTest() {
         super(Application.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        ParseUtil.initParse(getContext());
     }
 
     public void testClockInitialization() {

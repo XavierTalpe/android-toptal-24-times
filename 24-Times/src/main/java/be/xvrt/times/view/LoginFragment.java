@@ -20,6 +20,8 @@ import butterknife.OnClick;
 // TODO: Tags for every fragment.
 public final class LoginFragment extends Fragment {
 
+    public static final String TAG = "Login";
+
     @InjectView(R.id.errorTxt)
     TextView errorView;
 
@@ -85,7 +87,7 @@ public final class LoginFragment extends Fragment {
     void handleRegister() {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                       .replace(R.id.main_fragment_container, new RegisterFragment(), "register")
+                       .replace(R.id.main_fragment_container, new RegisterFragment(), RegisterFragment.TAG)
                        .addToBackStack(null)
                        .commit();
     }
