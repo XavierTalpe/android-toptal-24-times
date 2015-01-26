@@ -14,6 +14,7 @@ import android.text.method.TransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import be.xvrt.times.R;
 import butterknife.ButterKnife;
@@ -25,6 +26,9 @@ public final class RegisterFragment extends Fragment {
 
     public static final String TAG = "Register";
 
+    @InjectView(R.id.progressBar)
+    ProgressBar progressBar;
+
     @InjectView(R.id.errorTxt)
     TextView errorView;
 
@@ -33,6 +37,9 @@ public final class RegisterFragment extends Fragment {
 
     @InjectView(R.id.passwordTxt)
     TextView passwordView;
+
+    @InjectView(R.id.registerBtn)
+    TextView registerBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,34 +72,51 @@ public final class RegisterFragment extends Fragment {
     }
 
     @OnClick(R.id.registerBtn)
-    void handleLogin() {
-        errorView.setVisibility(View.INVISIBLE);
+    void handleRegister() {
+        registerBtn.setEnabled(false);
+        emailView.setEnabled(false);
+        passwordView.setEnabled(false);
+
+        progressBar.setVisibility(View.VISIBLE);
+        errorView.setVisibility(View.GONE);
 
         String email = emailView.getText().toString();
         String password = passwordView.getText().toString();
 
-        ParseUser user = new ParseUser();
-        user.setUsername(email);
-        user.setPassword(password);
-        user.setEmail(email);
+        if (email.length() == 0) {
+            handleError("user name cannot be empty");
+        } else if (password.length() == 0) {
+            handleError("password cannot be empty");
+        } else {
+            ParseUser user = new ParseUser();
+            user.setUsername(email);
+            user.setPassword(password);
+            user.setEmail(email);
 
-        user.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException exception) {
-                if (exception == null) {
-                    handleLoginSuccess();
-                } else {
-                    setErrorMessage(exception.getMessage());
+            user.signUpInBackground(new SignUpCallback() {
+                public void done(ParseException exception) {
+                    if (exception == null) {
+                        handleSuccess();
+                    } else {
+                        handleError(exception.getMessage());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
-    private void setErrorMessage(String message) {
+    private void handleError(String message) {
+        registerBtn.setEnabled(true);
+        emailView.setEnabled(true);
+        passwordView.setEnabled(true);
+
+        progressBar.setVisibility(View.GONE);
+
         errorView.setText(message);
         errorView.setVisibility(View.VISIBLE);
     }
 
-    private void handleLoginSuccess() {
+    private void handleSuccess() {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack();
         fragmentManager.beginTransaction()

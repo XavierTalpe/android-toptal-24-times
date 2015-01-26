@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import be.xvrt.times.R;
 import butterknife.ButterKnife;
@@ -21,6 +22,9 @@ public final class LoginFragment extends Fragment {
 
     public static final String TAG = "Login";
 
+    @InjectView(R.id.progressBar)
+    ProgressBar progressBar;
+
     @InjectView(R.id.errorTxt)
     TextView errorView;
 
@@ -29,6 +33,9 @@ public final class LoginFragment extends Fragment {
 
     @InjectView(R.id.passwordTxt)
     TextView passwordView;
+
+    @InjectView(R.id.loginBtn)
+    TextView loginBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,30 +58,46 @@ public final class LoginFragment extends Fragment {
 
     @OnClick(R.id.loginBtn)
     void handleLogin() {
-        errorView.setVisibility(View.INVISIBLE);
+        loginBtn.setEnabled(false);
+        usernameView.setEnabled(false);
+        passwordView.setEnabled(false);
+
+        progressBar.setVisibility(View.VISIBLE);
+        errorView.setVisibility(View.GONE);
 
         String username = usernameView.getText().toString();
         String password = passwordView.getText().toString();
 
-        // TODO: Extract as class?
-        ParseUser.logInInBackground(username, password, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException exception) {
-                if (user == null) {
-                    setErrorMessage(exception.getMessage());
-                } else {
-                    handleLoginSuccess();
+        if (username.length() == 0) {
+            handleError("user name cannot be empty");
+        } else if (password.length() == 0) {
+            handleError("password cannot be empty");
+        } else {
+            ParseUser.logInInBackground(username, password, new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException exception) {
+                    if (user == null) {
+                        handleError(exception.getMessage());
+                    } else {
+                        handleSuccess();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
-    private void setErrorMessage(String message) {
+    private void handleError(String message) {
+        loginBtn.setEnabled(true);
+        usernameView.setEnabled(true);
+        passwordView.setEnabled(true);
+
+        progressBar.setVisibility(View.GONE);
+
         errorView.setText(message);
         errorView.setVisibility(View.VISIBLE);
     }
 
-    private void handleLoginSuccess() {
+    private void handleSuccess() {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.popBackStack();
         fragmentManager.beginTransaction()
