@@ -88,7 +88,7 @@ final class ClocksAdapter extends BaseAdapter implements ClocksStore.ClocksStore
         @InjectView(R.id.cityTxt)
         TextView cityTxt;
 
-        @InjectView(R.id.timeTxt)
+        @InjectView(R.id.timeClock)
         TextView timeTxt;
 
         public LookupTable(View view) {

@@ -8,7 +8,6 @@
         android:id="@+id/timezoneTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/button_padding"
@@ -16,7 +15,6 @@
         android:layout_marginRight="@dimen/button_padding"
         android:background="@drawable/rounded_button_background"
         android:padding="@dimen/button_padding"
-        android:text="PST"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -26,13 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/button_padding"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/button_padding"
         android:layout_toEndOf="@+id/timezoneTxt"
-        android:layout_toRightOf="@+id/timezoneTxt"
         android:background="@drawable/rounded_button_background"
         android:padding="@dimen/button_padding"
-        android:text="GMT+1"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -42,20 +37,15 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/gmtDifferenceTxt"
-        android:layout_toRightOf="@+id/gmtDifferenceTxt"
-        android:text="Brussels"
         android:textSize="19sp" />
 
-    <TextView
-        android:id="@+id/timeTxt"
+    <TextClock
+        android:id="@+id/timeClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="15:12"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold" />
