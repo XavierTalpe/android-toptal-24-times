@@ -14,6 +14,6 @@
         android:id="@+id/cityTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Brussels"/>
+        android:hint="@string/exampleCityTxt" />
 
 </LinearLayout>

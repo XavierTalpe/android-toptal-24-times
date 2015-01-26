@@ -53,9 +53,9 @@ public final class EditClockDialog extends DialogFragment {
 
         final View dialogView = createDialogView(activity);
 
-        // TODO: title
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(dialogView);
+        builder.setTitle(editObject == null ? R.string.newClockTitle : R.string.editClockTitle);
         builder.setNegativeButton(R.string.cancelEdit, new DialogDismissOnClickListener());
         builder.setPositiveButton(R.string.editClockOK, new DialogDismissOnClickListener() {
             @Override
