@@ -1,51 +1,27 @@
 package be.xvrt.times.view;
 
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
-import android.text.method.TransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import be.xvrt.times.R;
+import be.xvrt.times.controller.RegisterFragmentController;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
 
 public final class RegisterFragment extends Fragment {
 
     public static final String TAG = "Register";
 
-    @InjectView(R.id.progressBar)
-    ProgressBar progressBar;
-
-    @InjectView(R.id.errorTxt)
-    TextView errorView;
-
-    @InjectView(R.id.emailTxt)
-    TextView emailView;
-
-    @InjectView(R.id.passwordTxt)
-    TextView passwordView;
-
-    @InjectView(R.id.registerBtn)
-    TextView registerBtn;
+    private RegisterFragmentController controller;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.register_fragment, container, false);
 
-        ButterKnife.inject(this, view);
+        controller = new RegisterFragmentController(this.getFragmentManager());
+        ButterKnife.inject(controller, view);
 
         return view;
     }
@@ -60,69 +36,11 @@ public final class RegisterFragment extends Fragment {
         }
     }
 
-    @OnCheckedChanged(R.id.showPasswordCbx)
-    void toggleShowPassword() {
-        TransformationMethod currentTransformationMethod = passwordView.getTransformationMethod();
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
 
-        if (currentTransformationMethod instanceof HideReturnsTransformationMethod) {
-            passwordView.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        } else {
-            passwordView.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-        }
-    }
-
-    // TODO: Use separate controller for this.
-    @OnClick(R.id.registerBtn)
-    void handleRegister() {
-        registerBtn.setEnabled(false);
-        emailView.setEnabled(false);
-        passwordView.setEnabled(false);
-
-        progressBar.setVisibility(View.VISIBLE);
-        errorView.setVisibility(View.GONE);
-
-        String email = emailView.getText().toString();
-        String password = passwordView.getText().toString();
-
-        if (email.length() == 0) {
-            showError("user name cannot be empty");
-        } else if (password.length() == 0) {
-            showError("password cannot be empty");
-        } else {
-            ParseUser user = new ParseUser();
-            user.setUsername(email);
-            user.setPassword(password);
-            user.setEmail(email);
-
-            user.signUpInBackground(new SignUpCallback() {
-                public void done(ParseException exception) {
-                    if (exception == null) {
-                        handleSuccess();
-                    } else {
-                        showError(exception.getMessage());
-                    }
-                }
-            });
-        }
-    }
-
-    private void showError(String message) {
-        registerBtn.setEnabled(true);
-        emailView.setEnabled(true);
-        passwordView.setEnabled(true);
-
-        progressBar.setVisibility(View.GONE);
-
-        errorView.setText(message);
-        errorView.setVisibility(View.VISIBLE);
-    }
-
-    private void handleSuccess() {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.popBackStack();
-        fragmentManager.beginTransaction()
-                       .replace(R.id.main_fragment_container, new ShowClocksFragment(), ShowClocksFragment.TAG)
-                       .commit();
+        controller = null;
     }
 
 }
