@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:ems="10"
+        android:ems="12"
         android:layout_above="@+id/passwordTxt"
         android:hint="@string/emailTxt"
         android:layout_centerHorizontal="true" />
@@ -31,24 +31,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:ems="10"
-        android:layout_above="@+id/showPasswordCbx"
+        android:ems="12"
         android:hint="@string/passwordTxt"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerInParent="true" />
 
     <CheckBox
         android:id="@+id/showPasswordCbx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/showPasswordTxt"
-        android:layout_above="@+id/registerBtn"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@+id/passwordTxt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
     <Button
         android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/registerTxt"
-        android:layout_centerInParent="true" />
+        android:layout_below="@+id/showPasswordCbx"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
