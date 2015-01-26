@@ -9,6 +9,7 @@ import android.widget.TextView;
 import be.xvrt.times.R;
 import be.xvrt.times.model.Clock;
 import be.xvrt.times.model.ClocksStore;
+import be.xvrt.times.model.Timezone;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -46,13 +47,21 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
             inputView.setTag(new LookupTable(inputView));
         }
 
-        Clock clock = (Clock) getItem(position);
-
-        LookupTable tag = (LookupTable) inputView.getTag();
-        tag.timezoneTxt.setText(clock.getTimezone());
-        tag.cityTxt.setText(clock.getCity());
+        populateView(position, inputView);
 
         return inputView;
+    }
+
+    private void populateView(int position, View inputView) {
+        Clock clock = (Clock) getItem(position);
+        String city = clock.getCity();
+        String timezoneId = clock.getTimezone();
+        Timezone timezone = Timezone.valueOf(timezoneId);
+
+        LookupTable tag = (LookupTable) inputView.getTag();
+        tag.timezoneTxt.setText(timezone.name());
+        tag.gmtDifferenceTxt.setText(timezone.getGmtTimezone());
+        tag.cityTxt.setText(city);
     }
 
     @Override
@@ -64,6 +73,9 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
 
         @InjectView(R.id.timezoneTxt)
         TextView timezoneTxt;
+
+        @InjectView(R.id.gmtDifferenceTxt)
+        TextView gmtDifferenceTxt;
 
         @InjectView(R.id.cityTxt)
         TextView cityTxt;

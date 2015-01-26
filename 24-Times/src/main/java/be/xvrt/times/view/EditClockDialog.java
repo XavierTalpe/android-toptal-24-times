@@ -7,12 +7,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -86,7 +85,7 @@ public final class EditClockDialog extends DialogFragment {
         View dialogView = inflater.inflate(R.layout.edit_clock_dialog, null);
         dialogView.setTag(new ViewLookupTable(dialogView));
 
-        populateDefaultView(dialogView);
+        populateDefaultView(activity, dialogView);
         if (editObject != null) {
             populateWithObject(dialogView, editObject);
         }
@@ -94,22 +93,21 @@ public final class EditClockDialog extends DialogFragment {
         return dialogView;
     }
 
-    private void populateDefaultView(View dialogView) {
-        BaseAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.timezones, android.R.layout.simple_spinner_item);
+    private void populateDefaultView(Context context, View dialogView) {
+        TimezoneAdapter timezoneAdapter = new TimezoneAdapter(context);
 
         ViewLookupTable lookupTable = (ViewLookupTable) dialogView.getTag();
-        lookupTable.timezoneLst.setAdapter(adapter);
+        lookupTable.timezoneLst.setAdapter(timezoneAdapter);
     }
 
     private void populateWithObject(View dialogView, Clock editObject) {
         ViewLookupTable lookupTable = (ViewLookupTable) dialogView.getTag();
 
-        lookupTable.cityTxt.setText(editObject.getCity());
+        TimezoneAdapter timezoneAdapter = (TimezoneAdapter) lookupTable.timezoneLst.getAdapter();
+        int itemId = timezoneAdapter.getItemId(editObject.getTimezone());
 
-        int timezoneId = findTimezoneId(lookupTable.timezoneLst, editObject.getTimezone());
-        if (timezoneId >= 0) {
-            lookupTable.timezoneLst.setSelection(timezoneId);
-        }
+        lookupTable.timezoneLst.setSelection(itemId);
+        lookupTable.cityTxt.setText(editObject.getCity());
     }
 
     private int findTimezoneId(Spinner timezoneLst, String targetTimezone) {
