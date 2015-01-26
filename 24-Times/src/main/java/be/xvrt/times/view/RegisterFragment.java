@@ -71,6 +71,7 @@ public final class RegisterFragment extends Fragment {
         }
     }
 
+    // TODO: Use separate controller for this.
     @OnClick(R.id.registerBtn)
     void handleRegister() {
         registerBtn.setEnabled(false);
@@ -84,9 +85,9 @@ public final class RegisterFragment extends Fragment {
         String password = passwordView.getText().toString();
 
         if (email.length() == 0) {
-            handleError("user name cannot be empty");
+            showError("user name cannot be empty");
         } else if (password.length() == 0) {
-            handleError("password cannot be empty");
+            showError("password cannot be empty");
         } else {
             ParseUser user = new ParseUser();
             user.setUsername(email);
@@ -98,14 +99,14 @@ public final class RegisterFragment extends Fragment {
                     if (exception == null) {
                         handleSuccess();
                     } else {
-                        handleError(exception.getMessage());
+                        showError(exception.getMessage());
                     }
                 }
             });
         }
     }
 
-    private void handleError(String message) {
+    private void showError(String message) {
         registerBtn.setEnabled(true);
         emailView.setEnabled(true);
         passwordView.setEnabled(true);

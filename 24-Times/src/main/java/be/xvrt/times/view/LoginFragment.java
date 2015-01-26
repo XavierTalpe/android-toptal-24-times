@@ -56,6 +56,7 @@ public final class LoginFragment extends Fragment {
         }
     }
 
+    // TODO: Use separate controller for this.
     @OnClick(R.id.loginBtn)
     void handleLogin() {
         loginBtn.setEnabled(false);
@@ -69,15 +70,15 @@ public final class LoginFragment extends Fragment {
         String password = passwordView.getText().toString();
 
         if (username.length() == 0) {
-            handleError("user name cannot be empty");
+            showError("user name cannot be empty");
         } else if (password.length() == 0) {
-            handleError("password cannot be empty");
+            showError("password cannot be empty");
         } else {
             ParseUser.logInInBackground(username, password, new LogInCallback() {
                 @Override
                 public void done(ParseUser user, ParseException exception) {
                     if (user == null) {
-                        handleError(exception.getMessage());
+                        showError(exception.getMessage());
                     } else {
                         handleSuccess();
                     }
@@ -86,7 +87,7 @@ public final class LoginFragment extends Fragment {
         }
     }
 
-    private void handleError(String message) {
+    private void showError(String message) {
         loginBtn.setEnabled(true);
         usernameView.setEnabled(true);
         passwordView.setEnabled(true);
