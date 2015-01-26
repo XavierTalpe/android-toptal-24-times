@@ -6,18 +6,18 @@ import android.graphics.Color;
 
 public enum Timezone {
     HST("Hawaii Standard Time", Color.rgb(0, 64, 192)),
-    PST8PDT("Pacific Standard Time", Color.rgb(0, 64, 192)),
-    MST("Mountain Standard Time", Color.rgb(128, 64, 64)),
+    PST8PDT("Pacific Standard Time", Color.rgb(0, 64, 128)),
+    MST("Mountain Standard Time", Color.rgb(128, 64, 0)),
     CST6CDT("Central Standard Time", Color.rgb(128, 64, 64)),
     EST("Eastern Standard Time", Color.rgb(64, 0, 192)),
-    WET("Western Europe Time", Color.rgb(192, 64, 32)),
+    WET("Western Europe Time", Color.rgb(64, 0, 128)),
     CET("Central Europe Time", Color.rgb(64, 64, 255)),
-    EET("Eastern Europe Time", Color.rgb(0, 128, 128)),
-    PRC("China Standard Time", Color.rgb(0, 128, 128)),
+    EET("Eastern Europe Time", Color.rgb(192, 64, 32)),
+    PRC("China Standard Time", Color.rgb(255, 64, 32)),
     ROK("Korea Standard Time", Color.rgb(0, 128, 128)),
-    NZ("New Zealand Time", Color.rgb(0, 128, 128)),
+    NZ("New Zealand Time", Color.rgb(0, 128, 255)),
     UTC("Universal", Color.rgb(192, 32, 32)),
-    Zulu("Zulu", Color.rgb(192, 32, 32)); // TODO
+    Zulu("Zulu", Color.rgb(192, 64, 64));
 
     private final String longName;
     private final int color;
