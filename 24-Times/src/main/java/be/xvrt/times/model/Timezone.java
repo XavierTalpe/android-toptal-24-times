@@ -1,5 +1,7 @@
 package be.xvrt.times.model;
 
+import java.util.TimeZone;
+
 import android.graphics.Color;
 
 public enum Timezone {
@@ -31,6 +33,18 @@ public enum Timezone {
 
     public int getColor() {
         return color;
+    }
+
+    public String asGMT() {
+        TimeZone timeZone = TimeZone.getTimeZone(name());
+        int rawOffset = timeZone.getRawOffset();
+        int nbHours = rawOffset / 3600000;
+
+        if (nbHours >= 0) {
+            return "GMT+" + nbHours;
+        } else {
+            return "GMT" + nbHours;
+        }
     }
 
 }

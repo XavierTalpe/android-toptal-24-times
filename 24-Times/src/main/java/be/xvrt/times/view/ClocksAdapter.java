@@ -63,14 +63,14 @@ final class ClocksAdapter extends BaseAdapter implements ClocksStore.ClocksStore
 
         LookupTable tag = (LookupTable) inputView.getTag();
         tag.timezoneTxt.setText(timezone.name());
-        tag.gmtDifferenceTxt.setText(timezone.name());
+        tag.gmtTime.setText(timezone.asGMT());
         tag.cityTxt.setText(city);
         tag.timeTxt.setTimeZone(timezone.name());
 
         GradientDrawable timezoneBackground = (GradientDrawable) tag.timezoneTxt.getBackground();
         timezoneBackground.setColor(timezone.getColor());
 
-        GradientDrawable gmtBackground = (GradientDrawable) tag.gmtDifferenceTxt.getBackground();
+        GradientDrawable gmtBackground = (GradientDrawable) tag.gmtTime.getBackground();
         gmtBackground.setColor(Color.rgb(102, 153, 0));
     }
 
@@ -85,7 +85,7 @@ final class ClocksAdapter extends BaseAdapter implements ClocksStore.ClocksStore
         TextView timezoneTxt;
 
         @InjectView(R.id.gmtDifferenceTxt)
-        TextView gmtDifferenceTxt;
+        TextView gmtTime;
 
         @InjectView(R.id.cityTxt)
         TextView cityTxt;
