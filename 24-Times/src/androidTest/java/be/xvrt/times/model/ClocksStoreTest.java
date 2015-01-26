@@ -2,8 +2,6 @@ package be.xvrt.times.model;
 
 import static be.xvrt.times.uil.ParseTestUtil.assertDeleted;
 
-import java.util.List;
-
 import com.parse.ParseUser;
 
 import android.app.Application;
@@ -29,12 +27,13 @@ public class ClocksStoreTest extends ApplicationTestCase<Application> {
 
         ParseUser user = ParseTestUtil.getTestUser();
         clocksStore = new ClocksStore(user);
-        clocksStore.clear();
+
+        Thread.sleep(1000); // Wait for initial query to finish.
 
         calledListenersCount = new int[]{0};
         clocksStore.addListener(new ClocksStoreListener() {
             @Override
-            public void onClocksStoreUpdated(List<Clock> clocks) {
+            public void onClocksStoreUpdated() {
                 calledListenersCount[0]++;
             }
         });
@@ -47,6 +46,9 @@ public class ClocksStoreTest extends ApplicationTestCase<Application> {
     @Override
     protected void tearDown() throws Exception {
         clocksStore.clear();
+
+        Thread.sleep(1000);
+
         super.tearDown();
     }
 
@@ -69,6 +71,8 @@ public class ClocksStoreTest extends ApplicationTestCase<Application> {
         assertEquals(0, clocksStore.getCount());
         assertEquals(2, calledListenersCount[0]);
 
+        Thread.sleep(1000);
+
         assertDeleted(brussels.getObjectId(), Clock.class);
     }
 
@@ -87,6 +91,8 @@ public class ClocksStoreTest extends ApplicationTestCase<Application> {
 
         assertEquals(0, clocksStore.getCount());
         assertEquals(3, calledListenersCount[0]);
+
+        Thread.sleep(1000);
 
         assertDeleted(brussels.getObjectId(), Clock.class);
     }

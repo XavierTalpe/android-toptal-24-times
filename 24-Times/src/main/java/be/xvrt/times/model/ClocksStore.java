@@ -3,49 +3,60 @@ package be.xvrt.times.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
-// TODO: Try everything from UI thread.
+import android.os.Handler;
+import android.os.Looper;
+
 public final class ClocksStore {
 
-    public static final String KEY_ALL_CLOCKS = "clocks";
-    private final ParseUser user;
     private final List<Clock> clocks;
 
     private final List<ClocksStoreListener> listeners;
 
     public ClocksStore(ParseUser user) {
-        this.user = user;
-        this.user.pinInBackground();
-
-        this.clocks = getClocksFromServer(user);
+        this.clocks = new ArrayList<Clock>();
         this.listeners = new ArrayList<ClocksStoreListener>();
+
+        syncWithRemote(user);
     }
 
-    private List<Clock> getClocksFromServer(ParseUser user) {
-        List<Clock> clocks = user.getList(KEY_ALL_CLOCKS);
-        if (clocks == null) {
-            // TODO: Move
-            //            Clock exampleClock = new Clock("GMT+1", "Brussels");
-            //
-            //            clocks.add(exampleClock);
-            clocks = new ArrayList<Clock>();
-        }
+    //    TODO: Improve logging
+    private void syncWithRemote(ParseUser user) {
+        ParseQuery<Clock> query = ParseQuery.getQuery(Clock.class);
+        query.whereEqualTo(Clock.KEY_CREATED_BY, user);
+        query.findInBackground(new FindCallback<Clock>() {
+            @Override
+            public void done(final List<Clock> list, ParseException exception) {
+                if (exception != null) {
+                    exception.printStackTrace();
+                } else {
+                    Handler mainHandler = new Handler(Looper.getMainLooper());
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            clocks.clear();
+                            clocks.addAll(list);
 
-        return clocks;
+                            notifyListeners();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void clear() {
         for (Clock clock : clocks) {
             clock.deleteEventually();
-            clock.deleteInBackground();
         }
 
         clocks.clear();
-
-        user.put(KEY_ALL_CLOCKS, clocks);
-        user.saveEventually();
-        user.saveInBackground();
     }
 
     public int getCount() {
@@ -57,21 +68,29 @@ public final class ClocksStore {
     }
 
     public void add(Clock clock) {
-        clock.pinInBackground();
-
         clocks.add(clock);
 
-        user.put(KEY_ALL_CLOCKS, clocks);
-        user.saveEventually();
-        user.saveInBackground();
+        clock.saveEventually(new SaveCallback() {
+            @Override
+            public void done(ParseException exception) {
+                if (exception != null) {
+                    exception.printStackTrace();
+                }
+            }
+        });
 
         notifyListeners();
     }
 
     public void update(Clock clock) {
-        clock.pinInBackground();
-        clock.saveEventually();
-        clock.saveInBackground();
+        clock.saveEventually(new SaveCallback() {
+            @Override
+            public void done(ParseException exception) {
+                if (exception != null) {
+                    exception.printStackTrace();
+                }
+            }
+        });
 
         notifyListeners();
     }
@@ -79,9 +98,14 @@ public final class ClocksStore {
     public void remove(Clock clock) {
         clocks.remove(clock);
 
-        user.put(KEY_ALL_CLOCKS, clocks);
-        user.saveEventually();
-        user.saveInBackground();
+        clock.deleteEventually(new DeleteCallback() {
+            @Override
+            public void done(ParseException exception) {
+                if (exception != null) {
+                    exception.printStackTrace();
+                }
+            }
+        });
 
         notifyListeners();
     }
@@ -96,13 +120,13 @@ public final class ClocksStore {
 
     private void notifyListeners() {
         for (ClocksStoreListener listener : listeners) {
-            listener.onClocksStoreUpdated(clocks);
+            listener.onClocksStoreUpdated();
         }
     }
 
     public interface ClocksStoreListener {
 
-        public void onClocksStoreUpdated(List<Clock> clocks);
+        public void onClocksStoreUpdated();
 
     }
 

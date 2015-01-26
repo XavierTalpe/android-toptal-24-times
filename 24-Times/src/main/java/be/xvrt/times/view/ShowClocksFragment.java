@@ -4,6 +4,7 @@ import com.parse.ParseUser;
 
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import be.xvrt.times.R;
 import be.xvrt.times.controller.EditClockController;
 import be.xvrt.times.model.Clock;
@@ -23,11 +25,11 @@ import butterknife.InjectView;
 public final class ShowClocksFragment extends Fragment {
 
     public static final String TAG = "ShowClocks";
-
-    private ClocksStore clocksStore;
-
+    @InjectView(R.id.progressBar)
+    ProgressBar progressBar;
     @InjectView(R.id.clocksLst)
     ListView clocksList;
+    private ClocksStore clocksStore;
 
     public ShowClocksFragment() {
     }
@@ -56,7 +58,27 @@ public final class ShowClocksFragment extends Fragment {
         }
 
         clocksStore = new ClocksStore(ParseUser.getCurrentUser());
-        clocksList.setAdapter(new ClocksAdapter(getActivity(), clocksStore));
+
+        final ClocksAdapter adapter = new ClocksAdapter(getActivity(), clocksStore);
+        adapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                showClocks();
+            }
+
+            @Override
+            public void onInvalidated() {
+                showClocks();
+            }
+
+            private void showClocks() {
+                progressBar.setVisibility(View.GONE);
+                clocksList.setVisibility(View.VISIBLE);
+                adapter.unregisterDataSetObserver(this);
+            }
+        });
+
+        clocksList.setAdapter(adapter);
     }
 
     @Override

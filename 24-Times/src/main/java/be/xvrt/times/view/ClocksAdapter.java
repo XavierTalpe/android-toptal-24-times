@@ -1,9 +1,5 @@
 package be.xvrt.times.view;
 
-import java.util.List;
-
-import com.parse.ParseException;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,19 +49,14 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
         Clock clock = (Clock) getItem(position);
 
         LookupTable tag = (LookupTable) inputView.getTag();
-        try {
-            clock.fetchFromLocalDatastore();    // TODO: WTF
-            tag.timezoneTxt.setText(clock.getTimezone());
-            tag.cityTxt.setText(clock.getCity());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        tag.timezoneTxt.setText(clock.getTimezone());
+        tag.cityTxt.setText(clock.getCity());
 
         return inputView;
     }
 
     @Override
-    public void onClocksStoreUpdated(List<Clock> clocks) {
+    public void onClocksStoreUpdated() {
         notifyDataSetChanged();
     }
 
