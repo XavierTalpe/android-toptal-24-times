@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import be.xvrt.times.R;
 import be.xvrt.times.dialog.DialogDismissOnClickListener;
@@ -92,9 +93,9 @@ public final class EditClockDialog extends DialogFragment {
     }
 
     private void populateDefaultView(View dialogView) {
-        ViewLookupTable lookupTable = (ViewLookupTable) dialogView.getTag();
-
         BaseAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.timezones, android.R.layout.simple_spinner_item);
+
+        ViewLookupTable lookupTable = (ViewLookupTable) dialogView.getTag();
         lookupTable.timezoneLst.setAdapter(adapter);
     }
 
@@ -102,8 +103,25 @@ public final class EditClockDialog extends DialogFragment {
         ViewLookupTable lookupTable = (ViewLookupTable) dialogView.getTag();
 
         lookupTable.cityTxt.setText(editObject.getCity());
-        // TODO
-        //        lookupTable.timezoneLst.setSelection(editObject.getCity());
+
+        int timezoneId = findTimezoneId(lookupTable.timezoneLst, editObject.getTimezone());
+        if (timezoneId >= 0) {
+            lookupTable.timezoneLst.setSelection(timezoneId);
+        }
+    }
+
+    private int findTimezoneId(Spinner timezoneLst, String targetTimezone) {
+        SpinnerAdapter adapter = timezoneLst.getAdapter();
+
+        int nbItems = adapter.getCount();
+        for (int i = 0; i < nbItems; i++) {
+            String timezone = adapter.getItem(i).toString();
+            if (timezone.equals(targetTimezone)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     private Clock extractClock(View dialogView) {

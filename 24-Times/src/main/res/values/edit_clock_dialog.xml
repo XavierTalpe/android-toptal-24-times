@@ -4,8 +4,13 @@
     <string name="cancelEdit">Cancel</string>
 
     <string-array name="timezones">
-        <item>GMT+1</item>
-        <item>GMT+2</item>
+        <item>Pacific Standard Time (PST)</item>
+        <item>Central Standard Time (CST)</item>
+        <item>Eastern Standard Time (EST)</item>
+        <item>Western Europe Time (WET)</item>
+        <item>Central Europe Time (CET)</item>
+        <item>Eastern Europe Time (EET)</item>
+        <item>Universal Time Coordinated (UTC)</item>
     </string-array>
 
 </resources>
