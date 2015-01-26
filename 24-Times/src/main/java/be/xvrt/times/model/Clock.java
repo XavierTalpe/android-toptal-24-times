@@ -12,7 +12,10 @@ public final class Clock extends ParseObject {
     private static final String KEY_CITY = "city";
 
     public Clock() {
-        put(KEY_CREATED_BY, ParseUser.getCurrentUser());
+    }
+
+    public void setUser(ParseUser user) {
+        put(KEY_CREATED_BY, user);
     }
 
     public String getTimezone() {

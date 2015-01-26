@@ -1,6 +1,8 @@
 package be.xvrt.times.view;
 
 
+import com.parse.ParseUser;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -130,6 +132,7 @@ public final class EditClockDialog extends DialogFragment {
         Spinner timezoneLst = lookupTable.timezoneLst;
 
         Clock clock = editObject == null ? new Clock() : editObject;
+        clock.setUser(ParseUser.getCurrentUser());
         clock.setCity(cityTxt.getText().toString());
         clock.setTimezone(timezoneLst.getSelectedItem().toString());
 

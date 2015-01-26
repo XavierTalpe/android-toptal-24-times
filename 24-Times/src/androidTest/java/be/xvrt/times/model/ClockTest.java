@@ -3,6 +3,7 @@ package be.xvrt.times.model;
 import static be.xvrt.times.uil.ParseTestUtil.assertDeleted;
 
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
@@ -15,6 +16,7 @@ public class ClockTest extends ApplicationTestCase<Application> {
 
     public void testClockInitialization() {
         Clock clock = new Clock();
+        clock.setUser(ParseUser.getCurrentUser());
         clock.setTimezone("GMT+1");
         clock.setCity("Brussels");
 
@@ -24,6 +26,7 @@ public class ClockTest extends ApplicationTestCase<Application> {
 
     public void testSaveDelete() {
         Clock clock = new Clock();
+        clock.setUser(ParseUser.getCurrentUser());
         clock.setTimezone("GMT+1");
         clock.setCity("Brussels");
 

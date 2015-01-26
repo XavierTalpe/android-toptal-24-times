@@ -39,6 +39,7 @@ public class ClocksStoreTest extends ApplicationTestCase<Application> {
         });
 
         brussels = new Clock();
+        brussels.setUser(user);
         brussels.setCity("Brussels");
         brussels.setTimezone("GMT+1");
     }

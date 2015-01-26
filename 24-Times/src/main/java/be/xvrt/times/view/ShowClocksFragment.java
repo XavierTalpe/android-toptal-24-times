@@ -25,10 +25,13 @@ import butterknife.InjectView;
 public final class ShowClocksFragment extends Fragment {
 
     public static final String TAG = "ShowClocks";
+
     @InjectView(R.id.progressBar)
     ProgressBar progressBar;
+
     @InjectView(R.id.clocksLst)
     ListView clocksList;
+
     private ClocksStore clocksStore;
 
     public ShowClocksFragment() {
