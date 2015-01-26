@@ -5,6 +5,8 @@
     <dimen name="list_height">52dp</dimen>
     <dimen name="list_item_padding">4dp</dimen>
 
+    <dimen name="dialog_padding">8dp</dimen>
+
     <dimen name="button_roundness">5dp</dimen>
     <dimen name="button_padding">5dp</dimen>
 </resources>

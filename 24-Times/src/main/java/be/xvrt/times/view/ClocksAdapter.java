@@ -1,6 +1,8 @@
 package be.xvrt.times.view;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,7 @@ import be.xvrt.times.model.Timezone;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public final class ClocksAdapter extends BaseAdapter implements ClocksStore.ClocksStoreListener {
+final class ClocksAdapter extends BaseAdapter implements ClocksStore.ClocksStoreListener {
 
     private final ClocksStore store;
     private final LayoutInflater inflater;
@@ -62,6 +64,12 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
         tag.timezoneTxt.setText(timezone.name());
         tag.gmtDifferenceTxt.setText(timezone.getGmtTimezone());
         tag.cityTxt.setText(city);
+
+        GradientDrawable timezoneBackground = (GradientDrawable) tag.timezoneTxt.getBackground();
+        timezoneBackground.setColor(timezone.getColor());
+
+        GradientDrawable gmtBackground = (GradientDrawable) tag.gmtDifferenceTxt.getBackground();
+        gmtBackground.setColor(Color.rgb(102, 153, 0));
     }
 
     @Override

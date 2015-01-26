@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="newClockTitle">Create clock</string>
+    <string name="newClockTitle">Add clock</string>
     <string name="editClockTitle">Edit clock</string>
     <string name="editClockOK">OK</string>
     <string name="cancelEdit">Cancel</string>
