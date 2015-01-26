@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextClock;
 import android.widget.TextView;
 import be.xvrt.times.R;
 import be.xvrt.times.model.Clock;
@@ -62,8 +63,9 @@ final class ClocksAdapter extends BaseAdapter implements ClocksStore.ClocksStore
 
         LookupTable tag = (LookupTable) inputView.getTag();
         tag.timezoneTxt.setText(timezone.name());
-        tag.gmtDifferenceTxt.setText(timezone.getGmtTimezone());
+        tag.gmtDifferenceTxt.setText(timezone.name());
         tag.cityTxt.setText(city);
+        tag.timeTxt.setTimeZone(timezone.name());
 
         GradientDrawable timezoneBackground = (GradientDrawable) tag.timezoneTxt.getBackground();
         timezoneBackground.setColor(timezone.getColor());
@@ -89,7 +91,7 @@ final class ClocksAdapter extends BaseAdapter implements ClocksStore.ClocksStore
         TextView cityTxt;
 
         @InjectView(R.id.timeClock)
-        TextView timeTxt;
+        TextClock timeTxt;
 
         public LookupTable(View view) {
             ButterKnife.inject(this, view);
