@@ -5,14 +5,14 @@ import static be.xvrt.times.uil.ParseTestUtil.assertDeleted;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-import android.app.Application;
 import android.test.ApplicationTestCase;
+import be.xvrt.times.ParseApplication;
 import be.xvrt.times.uil.ParseTestUtil;
 
-public class ClockTest extends ApplicationTestCase<Application> {
+public class ClockTest extends ApplicationTestCase<ParseApplication> {
 
     public ClockTest() {
-        super(Application.class);
+        super(ParseApplication.class);
     }
 
     @Override

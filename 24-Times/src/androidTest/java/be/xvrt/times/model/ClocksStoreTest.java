@@ -4,12 +4,12 @@ import static be.xvrt.times.uil.ParseTestUtil.assertDeleted;
 
 import com.parse.ParseUser;
 
-import android.app.Application;
 import android.test.ApplicationTestCase;
+import be.xvrt.times.ParseApplication;
 import be.xvrt.times.model.ClocksStore.ClocksStoreListener;
 import be.xvrt.times.uil.ParseTestUtil;
 
-public class ClocksStoreTest extends ApplicationTestCase<Application> {
+public class ClocksStoreTest extends ApplicationTestCase<ParseApplication> {
 
     private ClocksStore clocksStore;
 
@@ -18,7 +18,7 @@ public class ClocksStoreTest extends ApplicationTestCase<Application> {
     private Clock brussels;
 
     public ClocksStoreTest() {
-        super(Application.class);
+        super(ParseApplication.class);
     }
 
     @Override
