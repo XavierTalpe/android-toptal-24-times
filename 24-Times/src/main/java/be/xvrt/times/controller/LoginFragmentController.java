@@ -79,7 +79,8 @@ public final class LoginFragmentController {
     private void handleError(ParseException exception) {
         String message = exception.getMessage();
         if (message.contains("HttpHostConnectException") ||
-            message.contains("ConnectTimeoutException")) {
+            message.contains("ConnectTimeoutException") ||
+            message.contains("UnknownHostException")) {
             message = "no network connection available";
         }
 
