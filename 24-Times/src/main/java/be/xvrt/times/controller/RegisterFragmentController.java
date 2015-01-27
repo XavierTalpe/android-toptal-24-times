@@ -109,9 +109,12 @@ public final class RegisterFragmentController {
     }
 
     private void handleSuccess() {
+        ShowClocksFragment showClocksFragment = new ShowClocksFragment();
+        showClocksFragment.setIsFirstTimeUser(true);
+
         fragmentManager.popBackStack();
         fragmentManager.beginTransaction()
-                       .replace(R.id.main_fragment_container, new ShowClocksFragment(), ShowClocksFragment.TAG)
+                       .replace(R.id.main_fragment_container, showClocksFragment, ShowClocksFragment.TAG)
                        .commit();
     }
 

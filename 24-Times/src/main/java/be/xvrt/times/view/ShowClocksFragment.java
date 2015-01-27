@@ -19,6 +19,7 @@ import be.xvrt.times.R;
 import be.xvrt.times.controller.EditClockController;
 import be.xvrt.times.model.Clock;
 import be.xvrt.times.model.ClocksStore;
+import be.xvrt.times.model.Timezone;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -32,9 +33,12 @@ public final class ShowClocksFragment extends Fragment {
     @InjectView(R.id.clocksLst)
     ListView clocksList;
 
+    private boolean isFirstTimeUser;
+
     private ClocksStore clocksStore;
 
     public ShowClocksFragment() {
+        isFirstTimeUser = false;
     }
 
     public ClocksStore getClocksStore() {
@@ -49,6 +53,10 @@ public final class ShowClocksFragment extends Fragment {
         registerForContextMenu(clocksList);
 
         return view;
+    }
+
+    public void setIsFirstTimeUser(boolean isFirstTimeUser) {
+        this.isFirstTimeUser = isFirstTimeUser;
     }
 
     @Override
@@ -82,6 +90,19 @@ public final class ShowClocksFragment extends Fragment {
         });
 
         clocksList.setAdapter(adapter);
+
+        addInitialContentIfFirstTimeUser();
+    }
+
+    private void addInitialContentIfFirstTimeUser() {
+        if (isFirstTimeUser ) {
+            Clock clock = new Clock();
+            clock.setUser(ParseUser.getCurrentUser());
+            clock.setCity("Brussels");
+            clock.setTimezone(Timezone.CET.name());
+
+            clocksStore.add(clock);
+        }
     }
 
     @Override
