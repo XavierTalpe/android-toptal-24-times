@@ -12,7 +12,7 @@ public class TimezoneTest extends ApplicationTestCase<ParseApplication> {
     public void testGmtIsCorrectlyComputed() {
         assertEquals("GMT+1", Timezone.CET.asGMT());
         assertEquals("GMT-8", Timezone.PST8PDT.asGMT());
-        assertEquals("GMT+90", Timezone.ROK.asGMT());
+        assertEquals("GMT+9", Timezone.ROK.asGMT());
     }
 
 }
