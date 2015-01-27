@@ -15,6 +15,7 @@
         android:layout_marginRight="@dimen/button_padding"
         android:background="@drawable/rounded_button_background"
         android:padding="@dimen/button_padding"
+        android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -28,6 +29,7 @@
         android:layout_toEndOf="@+id/timezoneTxt"
         android:background="@drawable/rounded_button_background"
         android:padding="@dimen/button_padding"
+        android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold" />
 
