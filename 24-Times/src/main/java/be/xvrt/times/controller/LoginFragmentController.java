@@ -17,16 +17,24 @@ import butterknife.OnClick;
 public final class LoginFragmentController {
 
     private final FragmentManager fragmentManager;
+
     @InjectView(R.id.progressBar)
     ProgressBar progressBar;
+
     @InjectView(R.id.errorTxt)
     TextView errorView;
+
     @InjectView(R.id.usernameTxt)
     TextView usernameView;
+
     @InjectView(R.id.passwordTxt)
     TextView passwordView;
+
     @InjectView(R.id.loginBtn)
     TextView loginBtn;
+
+    @InjectView(R.id.registerTxt)
+    TextView registerTxt;
 
     public LoginFragmentController(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
@@ -37,6 +45,7 @@ public final class LoginFragmentController {
         loginBtn.setEnabled(false);
         usernameView.setEnabled(false);
         passwordView.setEnabled(false);
+        registerTxt.setEnabled(false);
 
         progressBar.setVisibility(View.VISIBLE);
         errorView.setVisibility(View.GONE);
@@ -66,6 +75,7 @@ public final class LoginFragmentController {
         loginBtn.setEnabled(true);
         usernameView.setEnabled(true);
         passwordView.setEnabled(true);
+        registerTxt.setEnabled(true);
 
         progressBar.setVisibility(View.GONE);
 
