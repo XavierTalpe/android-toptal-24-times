@@ -84,7 +84,8 @@ public final class RegisterFragmentController {
                         handleSuccess();
                     } else {
                         String message = exception.getMessage();
-                        if (message.contains("HttpHostConnectException")) {
+                        if (message.contains("HttpHostConnectException") ||
+                            message.contains("ConnectTimeoutException")) {
                             message = "no network connection available";
                         }
 
