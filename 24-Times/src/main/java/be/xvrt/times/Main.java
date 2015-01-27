@@ -51,7 +51,7 @@ public class Main extends Activity {
         switch (item.getItemId()) {
             case R.id.addClockMenu:
                 EditClockDialog editClockDialog = new EditClockDialog();
-                editClockDialog.setResultListener(new EditClockController(this));
+                editClockDialog.setResultListener(new EditClockController(getFragmentManager()));
                 editClockDialog.show(getFragmentManager(), null);
 
                 result = true;

@@ -1,6 +1,5 @@
 package be.xvrt.times.controller;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import be.xvrt.times.model.Clock;
@@ -12,8 +11,7 @@ public final class EditClockController implements ClockEditListener {
 
     private final ClocksStore clocksStore;
 
-    public EditClockController(Activity activity) {
-        FragmentManager fragmentManager = activity.getFragmentManager();
+    public EditClockController(FragmentManager fragmentManager) {
         Fragment showClocksFragment = fragmentManager.findFragmentByTag(ShowClocksFragment.TAG);
 
         if (showClocksFragment != null) {

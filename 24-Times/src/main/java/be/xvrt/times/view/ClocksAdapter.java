@@ -16,7 +16,7 @@ import be.xvrt.times.model.Timezone;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-final class ClocksAdapter extends BaseAdapter implements ClocksStore.ClocksStoreListener {
+public final class ClocksAdapter extends BaseAdapter implements ClocksStore.ClocksStoreListener {
 
     private final ClocksStore store;
     private final LayoutInflater inflater;

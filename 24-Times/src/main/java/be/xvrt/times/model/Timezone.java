@@ -5,6 +5,7 @@ import java.util.TimeZone;
 import android.graphics.Color;
 
 public enum Timezone {
+
     HST("Hawaii Standard Time", Color.rgb(0, 64, 192)),
     PST8PDT("Pacific Standard Time", Color.rgb(0, 64, 128)),
     MST("Mountain Standard Time", Color.rgb(128, 64, 0)),

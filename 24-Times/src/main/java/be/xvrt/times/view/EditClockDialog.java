@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import be.xvrt.times.R;
 import be.xvrt.times.dialog.DialogDismissOnClickListener;
@@ -63,8 +62,7 @@ public final class EditClockDialog extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 super.onClick(dialog, which);
 
-                Clock clock = extractClock(dialogView);
-                notifyListeners(clock);
+                handleEdit(dialogView);
             }
         });
 
@@ -85,43 +83,29 @@ public final class EditClockDialog extends DialogFragment {
         View dialogView = inflater.inflate(R.layout.edit_clock_dialog, null);
         dialogView.setTag(new ViewLookupTable(dialogView));
 
-        populateDefaultView(activity, dialogView);
-        if (editObject != null) {
-            populateWithObject(dialogView, editObject);
-        }
+        populateView(activity, dialogView, editObject);
 
         return dialogView;
     }
 
-    private void populateDefaultView(Context context, View dialogView) {
+    private void populateView(Context context, View dialogView, Clock editObject) {
         TimezoneAdapter timezoneAdapter = new TimezoneAdapter(context);
 
         ViewLookupTable lookupTable = (ViewLookupTable) dialogView.getTag();
         lookupTable.timezoneLst.setAdapter(timezoneAdapter);
-    }
 
-    private void populateWithObject(View dialogView, Clock editObject) {
-        ViewLookupTable lookupTable = (ViewLookupTable) dialogView.getTag();
+        if (editObject != null) {
+            int itemId = timezoneAdapter.getItemId(editObject.getTimezone());
 
-        TimezoneAdapter timezoneAdapter = (TimezoneAdapter) lookupTable.timezoneLst.getAdapter();
-        int itemId = timezoneAdapter.getItemId(editObject.getTimezone());
-
-        lookupTable.timezoneLst.setSelection(itemId);
-        lookupTable.cityTxt.setText(editObject.getCity());
-    }
-
-    private int findTimezoneId(Spinner timezoneLst, String targetTimezone) {
-        SpinnerAdapter adapter = timezoneLst.getAdapter();
-
-        int nbItems = adapter.getCount();
-        for (int i = 0; i < nbItems; i++) {
-            String timezone = adapter.getItem(i).toString();
-            if (timezone.equals(targetTimezone)) {
-                return i;
-            }
+            lookupTable.timezoneLst.setSelection(itemId);
+            lookupTable.cityTxt.setText(editObject.getCity());
         }
+    }
 
-        return -1;
+    private void handleEdit(View dialogView) {
+        Clock clock = extractClock(dialogView);
+
+        notifyListeners(clock);
     }
 
     private Clock extractClock(View dialogView) {
