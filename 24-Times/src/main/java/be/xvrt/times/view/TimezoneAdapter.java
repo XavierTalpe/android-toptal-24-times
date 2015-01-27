@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import be.xvrt.times.R;
 import be.xvrt.times.model.Timezone;
 
 final class TimezoneAdapter extends BaseAdapter implements SpinnerAdapter {
@@ -53,7 +54,7 @@ final class TimezoneAdapter extends BaseAdapter implements SpinnerAdapter {
     @Override
     public View getView(int position, View inputView, ViewGroup parent) {
         if (inputView == null) {
-            inputView = inflater.inflate(android.R.layout.simple_spinner_item, parent, false);
+            inputView = inflater.inflate(R.layout.timezone_spinner, parent, false);
         }
 
         Timezone timezone = timezones[position];

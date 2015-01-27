@@ -4,18 +4,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/dialog_padding">
+    android:padding="@dimen/default_padding">
 
     <Spinner
         android:id="@+id/timezoneLst"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin" />
+        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/cityTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:hint="@string/exampleCityTxt" />
 
 </LinearLayout>

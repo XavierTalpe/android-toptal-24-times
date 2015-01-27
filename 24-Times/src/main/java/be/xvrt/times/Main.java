@@ -23,7 +23,7 @@ public class Main extends Activity {
         setContentView(R.layout.activity_main);
 
         ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
         actionBar.hide();
     }
 
