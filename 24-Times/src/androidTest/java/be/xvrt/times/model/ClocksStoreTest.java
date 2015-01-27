@@ -49,6 +49,7 @@ public class ClocksStoreTest extends ApplicationTestCase<Application> {
         clocksStore.clear();
 
         Thread.sleep(1000);
+        ParseUser.logOut();
 
         super.tearDown();
     }

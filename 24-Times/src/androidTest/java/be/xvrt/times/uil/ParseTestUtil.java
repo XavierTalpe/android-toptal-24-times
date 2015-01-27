@@ -30,7 +30,7 @@ public final class ParseTestUtil {
         return loginAsTestUser();
     }
 
-    private static ParseUser loginAsTestUser() throws InterruptedException {
+    public static ParseUser loginAsTestUser() throws InterruptedException {
         ParseUser.logOut();
 
         Task<ParseUser> loginTask = ParseUser.logInInBackground(TEST_USERNAME, TEST_PASSWORD);

@@ -7,11 +7,24 @@ import com.parse.ParseUser;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
+import be.xvrt.times.uil.ParseTestUtil;
 
 public class ClockTest extends ApplicationTestCase<Application> {
 
     public ClockTest() {
         super(Application.class);
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        ParseTestUtil.loginAsTestUser();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        ParseUser.logOut();
+        super.tearDown();
     }
 
     public void testClockInitialization() {
