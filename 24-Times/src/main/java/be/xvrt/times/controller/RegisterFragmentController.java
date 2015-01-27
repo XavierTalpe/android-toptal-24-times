@@ -57,13 +57,7 @@ public final class RegisterFragmentController {
 
     @OnClick(R.id.registerBtn)
     void handleRegister() {
-        registerBtn.setEnabled(false);
-        emailView.setEnabled(false);
-        passwordView.setEnabled(false);
-        showPasswordCbx.setEnabled(false);
-
-        progressBar.setVisibility(View.VISIBLE);
-        errorView.setVisibility(View.GONE);
+        setViewEnabled(false);
 
         String email = emailView.getText().toString();
         String password = passwordView.getText().toString();
@@ -73,36 +67,39 @@ public final class RegisterFragmentController {
         } else if (password.length() == 0) {
             showError("password cannot be empty");
         } else {
-            ParseUser user = new ParseUser();
-            user.setUsername(email);
-            user.setPassword(password);
-            user.setEmail(email);
-
-            user.signUpInBackground(new SignUpCallback() {
-                public void done(ParseException exception) {
-                    if (exception == null) {
-                        handleSuccess();
-                    } else {
-                        String message = exception.getMessage();
-                        if (message.contains("HttpHostConnectException") ||
-                            message.contains("ConnectTimeoutException")) {
-                            message = "no network connection available";
-                        }
-
-                        showError(message);
-                    }
-                }
-            });
+            signUp(email, password);
         }
     }
 
-    private void showError(String message) {
-        registerBtn.setEnabled(true);
-        emailView.setEnabled(true);
-        passwordView.setEnabled(true);
-        showPasswordCbx.setEnabled(true);
+    private void signUp(String email, String password) {
+        ParseUser user = new ParseUser();
+        user.setUsername(email);
+        user.setPassword(password);
+        user.setEmail(email);
 
-        progressBar.setVisibility(View.GONE);
+        user.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException exception) {
+                if (exception == null) {
+                    handleSuccess();
+                } else {
+                    handleError(exception);
+                }
+            }
+        });
+    }
+
+    private void handleError(ParseException exception) {
+        String message = exception.getMessage();
+        if (message.contains("HttpHostConnectException") ||
+            message.contains("ConnectTimeoutException")) {
+            message = "no network connection available";
+        }
+
+        showError(message);
+    }
+
+    private void showError(String message) {
+        setViewEnabled(true);
 
         errorView.setText(message);
         errorView.setVisibility(View.VISIBLE);
@@ -116,6 +113,20 @@ public final class RegisterFragmentController {
         fragmentManager.beginTransaction()
                        .replace(R.id.main_fragment_container, showClocksFragment, ShowClocksFragment.TAG)
                        .commit();
+    }
+
+    private void setViewEnabled(boolean enabled) {
+        registerBtn.setEnabled(enabled);
+        emailView.setEnabled(enabled);
+        passwordView.setEnabled(enabled);
+        showPasswordCbx.setEnabled(enabled);
+
+        if (enabled) {
+            progressBar.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.VISIBLE);
+            errorView.setVisibility(View.GONE);
+        }
     }
 
 }

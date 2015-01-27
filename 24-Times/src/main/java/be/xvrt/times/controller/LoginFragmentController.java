@@ -42,13 +42,7 @@ public final class LoginFragmentController {
 
     @OnClick(R.id.loginBtn)
     void handleLogin() {
-        loginBtn.setEnabled(false);
-        usernameView.setEnabled(false);
-        passwordView.setEnabled(false);
-        registerTxt.setEnabled(false);
-
-        progressBar.setVisibility(View.VISIBLE);
-        errorView.setVisibility(View.GONE);
+        setViewEnabled(false);
 
         String username = usernameView.getText().toString();
         String password = passwordView.getText().toString();
@@ -58,35 +52,21 @@ public final class LoginFragmentController {
         } else if (password.length() == 0) {
             showError("password cannot be empty");
         } else {
-            ParseUser.logInInBackground(username, password, new LogInCallback() {
-                @Override
-                public void done(ParseUser user, ParseException exception) {
-                    if (user == null) {
-                        String message = exception.getMessage();
-                        if (message.contains("HttpHostConnectException") ||
-                            message.contains("ConnectTimeoutException")) {
-                            message = "no network connection available";
-                        }
-
-                        showError(message);
-                    } else {
-                        handleSuccess();
-                    }
-                }
-            });
+            login(username, password);
         }
     }
 
-    private void showError(String message) {
-        loginBtn.setEnabled(true);
-        usernameView.setEnabled(true);
-        passwordView.setEnabled(true);
-        registerTxt.setEnabled(true);
-
-        progressBar.setVisibility(View.GONE);
-
-        errorView.setText(message);
-        errorView.setVisibility(View.VISIBLE);
+    private void login(String username, String password) {
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException exception) {
+                if (user == null) {
+                    handleError(exception);
+                } else {
+                    handleSuccess();
+                }
+            }
+        });
     }
 
     private void handleSuccess() {
@@ -94,6 +74,38 @@ public final class LoginFragmentController {
         fragmentManager.beginTransaction()
                        .replace(R.id.main_fragment_container, new ShowClocksFragment(), ShowClocksFragment.TAG)
                        .commit();
+    }
+
+    private void handleError(ParseException exception) {
+        String message = exception.getMessage();
+        if (message.contains("HttpHostConnectException") ||
+            message.contains("ConnectTimeoutException")) {
+            message = "no network connection available";
+        }
+
+        showError(message);
+    }
+
+    private void showError(String message) {
+        setViewEnabled(true);
+
+        errorView.setText(message);
+        errorView.setVisibility(View.VISIBLE);
+    }
+
+    private void setViewEnabled(boolean enabled) {
+        loginBtn.setEnabled(enabled);
+        usernameView.setEnabled(enabled);
+        passwordView.setEnabled(enabled);
+        registerTxt.setEnabled(enabled);
+
+        if (enabled) {
+            progressBar.setVisibility(View.GONE);
+        }
+        else {
+            progressBar.setVisibility(View.VISIBLE);
+            errorView.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.registerTxt)
