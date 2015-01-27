@@ -9,6 +9,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import be.xvrt.times.R;
@@ -33,6 +34,9 @@ public final class RegisterFragmentController {
     @InjectView(R.id.passwordTxt)
     TextView passwordView;
 
+    @InjectView(R.id.showPasswordCbx)
+    CheckBox showPasswordCbx;
+
     @InjectView(R.id.registerBtn)
     TextView registerBtn;
 
@@ -56,6 +60,7 @@ public final class RegisterFragmentController {
         registerBtn.setEnabled(false);
         emailView.setEnabled(false);
         passwordView.setEnabled(false);
+        showPasswordCbx.setEnabled(false);
 
         progressBar.setVisibility(View.VISIBLE);
         errorView.setVisibility(View.GONE);
@@ -94,6 +99,7 @@ public final class RegisterFragmentController {
         registerBtn.setEnabled(true);
         emailView.setEnabled(true);
         passwordView.setEnabled(true);
+        showPasswordCbx.setEnabled(true);
 
         progressBar.setVisibility(View.GONE);
 
