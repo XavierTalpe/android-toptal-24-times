@@ -9,8 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import be.xvrt.times.controller.EditClockController;
 import be.xvrt.times.util.FragmentUtil;
-import be.xvrt.times.view.LoginFragment;
 import be.xvrt.times.view.EditClockDialog;
+import be.xvrt.times.view.LoginFragment;
 import be.xvrt.times.view.ShowClocksFragment;
 
 
