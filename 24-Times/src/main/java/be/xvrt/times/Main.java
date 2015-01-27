@@ -66,7 +66,6 @@ public class Main extends Activity {
         return result || super.onOptionsItemSelected(item);
     }
 
-    // TODO: Refactor into controller
     private void logout() {
         ParseUser.logOut();
 

@@ -26,7 +26,6 @@ public final class ClocksStore {
         syncWithRemote(user);
     }
 
-    //    TODO: Improve logging
     private void syncWithRemote(ParseUser user) {
         ParseQuery<Clock> query = ParseQuery.getQuery(Clock.class);
         query.whereEqualTo(Clock.KEY_CREATED_BY, user);
