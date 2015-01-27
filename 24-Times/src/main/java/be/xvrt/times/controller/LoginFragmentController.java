@@ -62,7 +62,12 @@ public final class LoginFragmentController {
                 @Override
                 public void done(ParseUser user, ParseException exception) {
                     if (user == null) {
-                        showError(exception.getMessage());
+                        String message = exception.getMessage();
+                        if (message.contains("HttpHostConnectException")) {
+                            message = "no network connection available";
+                        }
+
+                        showError(message);
                     } else {
                         handleSuccess();
                     }

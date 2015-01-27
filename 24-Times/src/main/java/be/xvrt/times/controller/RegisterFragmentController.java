@@ -20,14 +20,19 @@ import butterknife.OnClick;
 public final class RegisterFragmentController {
 
     private final FragmentManager fragmentManager;
+
     @InjectView(R.id.progressBar)
     ProgressBar progressBar;
+
     @InjectView(R.id.errorTxt)
     TextView errorView;
+
     @InjectView(R.id.emailTxt)
     TextView emailView;
+
     @InjectView(R.id.passwordTxt)
     TextView passwordView;
+
     @InjectView(R.id.registerBtn)
     TextView registerBtn;
 
@@ -73,7 +78,12 @@ public final class RegisterFragmentController {
                     if (exception == null) {
                         handleSuccess();
                     } else {
-                        showError(exception.getMessage());
+                        String message = exception.getMessage();
+                        if (message.contains("HttpHostConnectException")) {
+                            message = "no network connection available";
+                        }
+
+                        showError(message);
                     }
                 }
             });

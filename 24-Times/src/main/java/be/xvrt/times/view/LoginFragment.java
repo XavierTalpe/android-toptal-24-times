@@ -22,8 +22,6 @@ public final class LoginFragment extends Fragment {
 
         controller = new LoginFragmentController(this.getFragmentManager());
         ButterKnife.inject(controller, view);
-        // TODO: try convertView.setTag(R.id.banana, bananaView);
-        // http://www.piwai.info/android-adapter-good-practices/
 
         return view;
     }
