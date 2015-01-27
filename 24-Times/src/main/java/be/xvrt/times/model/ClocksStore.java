@@ -39,7 +39,6 @@ public final class ClocksStore {
                     mainHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            clocks.clear();
                             clocks.addAll(list);
 
                             notifyListeners();

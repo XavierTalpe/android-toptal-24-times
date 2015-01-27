@@ -96,6 +96,8 @@ public final class ShowClocksFragment extends Fragment {
 
     private void addInitialContentIfFirstTimeUser() {
         if (isFirstTimeUser ) {
+            isFirstTimeUser = false;
+
             Clock clock = new Clock();
             clock.setUser(ParseUser.getCurrentUser());
             clock.setCity("Brussels");
