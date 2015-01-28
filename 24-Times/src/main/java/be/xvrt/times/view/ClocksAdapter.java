@@ -1,5 +1,7 @@
 package be.xvrt.times.view;
 
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -21,6 +23,8 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
     private final ClocksStore store;
     private final LayoutInflater inflater;
 
+    private List<Clock> clocks;
+
     public ClocksAdapter(Context context, ClocksStore store) {
         this.store = store;
         this.store.addListener(this);
@@ -30,12 +34,12 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
 
     @Override
     public int getCount() {
-        return store.getCount();
+        return clocks.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return store.getClock(position);
+        return clocks.get(position);
     }
 
     @Override
@@ -77,6 +81,8 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
     @Override
     public void onClocksStoreUpdated() {
         notifyDataSetChanged();
+
+        clocks = store.query();
     }
 
     static final class LookupTable {

@@ -16,7 +16,6 @@ import android.os.Looper;
 public final class ClocksStore {
 
     private final List<Clock> clocks;
-
     private final List<ClocksStoreListener> listeners;
 
     public ClocksStore(ParseUser user) {
@@ -47,6 +46,14 @@ public final class ClocksStore {
                 }
             }
         });
+    }
+
+    public List<Clock> query() {
+        List<Clock> result = new ArrayList<Clock>();
+
+        clocks.addAll(result);
+
+        return result;
     }
 
     public void clear() {
