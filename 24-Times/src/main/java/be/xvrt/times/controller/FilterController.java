@@ -11,10 +11,13 @@ public final class FilterController {
 
     private final FragmentManager fragmentManager;
 
+    private String activeFilter;
     private MenuItem clearFilterMenuItem;
 
     public FilterController(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
+        this.activeFilter = null;
+        this.clearFilterMenuItem = null;
     }
 
     public void setMenu(Menu menu) {
@@ -22,16 +25,26 @@ public final class FilterController {
     }
 
     public boolean setFilter(String cityFilter) {
+        setActiveFilter(cityFilter);
+        return true;
+    }
+
+    public boolean clearFilter() {
+        setActiveFilter(null);
+        return true;
+    }
+
+    private void setActiveFilter(String filter) {
+        activeFilter = filter;
+
         ShowClocksFragmentController controller = findShowClocksController();
         if (controller != null) {
-            controller.setFilter(cityFilter);
+            controller.setFilter(filter);
         }
 
         if (clearFilterMenuItem != null) {
-            clearFilterMenuItem.setEnabled(true);
+            clearFilterMenuItem.setEnabled(filter != null);
         }
-
-        return true;
     }
 
     private ShowClocksFragmentController findShowClocksController() {
@@ -44,19 +57,6 @@ public final class FilterController {
         }
 
         return result;
-    }
-
-    public boolean clearFilter() {
-        ShowClocksFragmentController controller = findShowClocksController();
-        if (controller != null) {
-            controller.setFilter(null);
-        }
-
-        if (clearFilterMenuItem != null) {
-            clearFilterMenuItem.setEnabled(false);
-        }
-
-        return true;
     }
 
 }
