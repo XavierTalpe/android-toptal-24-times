@@ -94,7 +94,7 @@ public class Main extends Activity {
         ParseUser.logOut();
 
         getFragmentManager().beginTransaction()
-                            .replace(R.id.main_fragment_container, new LoginFragment())
+                            .replace(R.id.main_fragment_container, new LoginFragment(), LoginFragment.TAG)
                             .commit();
     }
 
