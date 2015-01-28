@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import be.xvrt.times.controller.EditClockController;
+import be.xvrt.times.controller.FilterController;
 import be.xvrt.times.util.FragmentUtil;
 import be.xvrt.times.view.EditClockDialog;
 import be.xvrt.times.view.LoginFragment;
@@ -15,6 +16,8 @@ import be.xvrt.times.view.ShowClocksFragment;
 
 
 public class Main extends Activity {
+
+    private FilterController filterController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +28,16 @@ public class Main extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.hide();
+
+        filterController = new FilterController(getFragmentManager());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        filterController.setMenu(menu);
+
         return true;
     }
 
@@ -56,6 +64,13 @@ public class Main extends Activity {
 
                 result = true;
                 break;
+            case R.id.setFilterMenu:
+//                TODO
+                result = filterController.setFilter("Brussels");
+                break;
+            case R.id.clearFilterMenu:
+                result = filterController.clearFilter();
+                break;
             case R.id.logoutMenu:
                 logout();
 
@@ -64,6 +79,13 @@ public class Main extends Activity {
         }
 
         return result || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        filterController = null;
+
+        super.onDestroy();
     }
 
     private void logout() {

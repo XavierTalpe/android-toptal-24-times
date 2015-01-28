@@ -37,6 +37,12 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
         this.cityFilter = null;
     }
 
+    public void setFilter(String cityFilter) {
+        this.cityFilter = cityFilter;
+
+        invalidateDataSet();
+    }
+
     @Override
     public int getCount() {
         return clocks.size();
@@ -85,14 +91,17 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
 
     @Override
     public void onClocksStoreUpdated() {
-        notifyDataSetChanged();
+        invalidateDataSet();
+    }
 
-        if ( cityFilter == null ) {
+    private void invalidateDataSet() {
+        if (cityFilter == null) {
             clocks = store.queryAll();
-        }
-        else {
+        } else {
             clocks = store.query(cityFilter);
         }
+
+        notifyDataSetChanged();
     }
 
     static final class LookupTable {

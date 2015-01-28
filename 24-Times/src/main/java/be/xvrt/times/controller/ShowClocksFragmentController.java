@@ -45,6 +45,10 @@ public final class ShowClocksFragmentController {
         return clocksStore;
     }
 
+    public void setFilter(String cityFilter) {
+        clocksAdapter.setFilter(cityFilter);
+    }
+
     private void showLoadingAnimation() {
         clocksAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override

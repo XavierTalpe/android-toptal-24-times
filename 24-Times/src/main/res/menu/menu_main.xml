@@ -8,6 +8,17 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/setFilterMenu"
+        android:title="@string/setFilterTxt"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/clearFilterMenu"
+        android:title="@string/clearFilterTxt"
+        android:enabled="false"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/logoutMenu"
         android:title="@string/logoutTxt"
         app:showAsAction="never" />

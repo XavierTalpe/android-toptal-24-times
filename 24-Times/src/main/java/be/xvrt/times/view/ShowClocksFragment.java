@@ -13,7 +13,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import be.xvrt.times.R;
 import be.xvrt.times.controller.ShowClocksFragmentController;
-import be.xvrt.times.model.ClocksStore;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -32,8 +31,8 @@ public final class ShowClocksFragment extends Fragment {
         isFirstTimeUser = false;
     }
 
-    public ClocksStore getClocksStore() {
-        return controller.getClocksStore();
+    public ShowClocksFragmentController getController() {
+        return controller;
     }
 
     public void setIsFirstTimeUser(boolean isFirstTimeUser) {
