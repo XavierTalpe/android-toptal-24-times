@@ -83,7 +83,7 @@ public final class ShowClocksFragmentController {
     }
 
     public boolean handleClockEdit(int selectedItem) {
-        Clock clockToEdit = clocksStore.getClock(selectedItem);
+        Clock clockToEdit = (Clock) clocksAdapter.getItem(selectedItem);
 
         EditClockDialog editClockDialog = new EditClockDialog();
         editClockDialog.setEditObject(clockToEdit);
