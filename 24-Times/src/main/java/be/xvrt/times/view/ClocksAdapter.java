@@ -1,5 +1,6 @@
 package be.xvrt.times.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -24,12 +25,16 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
     private final LayoutInflater inflater;
 
     private List<Clock> clocks;
+    private String cityFilter;
 
     public ClocksAdapter(Context context, ClocksStore store) {
         this.store = store;
         this.store.addListener(this);
 
         this.inflater = LayoutInflater.from(context);
+
+        this.clocks = new ArrayList<Clock>(0);
+        this.cityFilter = null;
     }
 
     @Override
@@ -82,7 +87,12 @@ public final class ClocksAdapter extends BaseAdapter implements ClocksStore.Cloc
     public void onClocksStoreUpdated() {
         notifyDataSetChanged();
 
-        clocks = store.query();
+        if ( cityFilter == null ) {
+            clocks = store.queryAll();
+        }
+        else {
+            clocks = store.query(cityFilter);
+        }
     }
 
     static final class LookupTable {

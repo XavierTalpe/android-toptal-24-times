@@ -48,10 +48,22 @@ public final class ClocksStore {
         });
     }
 
-    public List<Clock> query() {
-        List<Clock> result = new ArrayList<Clock>();
+    public List<Clock> queryAll() {
+        List<Clock> result = new ArrayList<Clock>(clocks.size());
 
-        clocks.addAll(result);
+        result.addAll(clocks);
+
+        return result;
+    }
+
+    public List<Clock> query(String cityFilter) {
+        List<Clock> result = new ArrayList<Clock>(clocks.size());
+
+        for (Clock clock : clocks) {
+            if ( clock.getCity().contains(cityFilter)) {
+                result.add(clock);
+            }
+        }
 
         return result;
     }

@@ -1,6 +1,6 @@
 package be.xvrt.times.model;
 
-import static be.xvrt.times.uil.ParseTestUtil.assertDeleted;
+import java.util.List;
 
 import com.parse.ParseUser;
 
@@ -28,7 +28,7 @@ public class ClocksStoreTest extends ApplicationTestCase<ParseApplication> {
         ParseUser user = ParseTestUtil.getTestUser();
         clocksStore = new ClocksStore(user);
 
-        Thread.sleep(1000); // Wait for initial query to finish.
+        Thread.sleep(2000); // Wait for initial query to finish.
 
         calledListenersCount = new int[]{0};
         clocksStore.addListener(new ClocksStoreListener() {
@@ -48,7 +48,7 @@ public class ClocksStoreTest extends ApplicationTestCase<ParseApplication> {
     protected void tearDown() throws Exception {
         clocksStore.clear();
 
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         ParseUser.logOut();
 
         super.tearDown();
@@ -72,10 +72,6 @@ public class ClocksStoreTest extends ApplicationTestCase<ParseApplication> {
 
         assertEquals(0, clocksStore.getCount());
         assertEquals(2, calledListenersCount[0]);
-
-        Thread.sleep(1000);
-
-        assertDeleted(brussels.getObjectId(), Clock.class);
     }
 
     public void testClockIsUpdatedAndRemoved() throws Exception {
@@ -93,10 +89,22 @@ public class ClocksStoreTest extends ApplicationTestCase<ParseApplication> {
 
         assertEquals(0, clocksStore.getCount());
         assertEquals(3, calledListenersCount[0]);
+    }
 
-        Thread.sleep(1000);
+    public void testQuery() throws Exception {
+        List<Clock> clocks = clocksStore.queryAll();
+        assertEquals(0, clocks.size());
 
-        assertDeleted(brussels.getObjectId(), Clock.class);
+        clocksStore.add(brussels);
+
+        clocks = clocksStore.queryAll();
+        assertEquals(1, clocks.size());
+
+        clocks = clocksStore.query("Brussels");
+        assertEquals(1, clocks.size());
+
+        clocks = clocksStore.query("Washington");
+        assertEquals(0, clocks.size());
     }
 
 }
