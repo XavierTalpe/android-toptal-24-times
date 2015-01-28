@@ -12,6 +12,7 @@ import be.xvrt.times.controller.FilterController;
 import be.xvrt.times.util.FragmentUtil;
 import be.xvrt.times.view.EditClockDialog;
 import be.xvrt.times.view.LoginFragment;
+import be.xvrt.times.view.SetFilterDialog;
 import be.xvrt.times.view.ShowClocksFragment;
 
 
@@ -65,8 +66,9 @@ public class Main extends Activity {
                 result = true;
                 break;
             case R.id.setFilterMenu:
-//                TODO
-                result = filterController.setFilter("Brussels");
+                SetFilterDialog setFilterDialog = new SetFilterDialog();
+                setFilterDialog.setResultListener(filterController);
+                setFilterDialog.show(getFragmentManager(), null);
                 break;
             case R.id.clearFilterMenu:
                 result = filterController.clearFilter();

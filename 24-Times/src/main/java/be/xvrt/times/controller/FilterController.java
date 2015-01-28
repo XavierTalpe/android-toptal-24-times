@@ -5,18 +5,17 @@ import android.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import be.xvrt.times.R;
+import be.xvrt.times.view.SetFilterDialog.FilterEditListener;
 import be.xvrt.times.view.ShowClocksFragment;
 
-public final class FilterController {
+public final class FilterController implements FilterEditListener {
 
     private final FragmentManager fragmentManager;
 
-    private String activeFilter;
     private MenuItem clearFilterMenuItem;
 
     public FilterController(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
-        this.activeFilter = null;
         this.clearFilterMenuItem = null;
     }
 
@@ -24,9 +23,9 @@ public final class FilterController {
         clearFilterMenuItem = menu.findItem(R.id.clearFilterMenu);
     }
 
-    public boolean setFilter(String cityFilter) {
-        setActiveFilter(cityFilter);
-        return true;
+    @Override
+    public void onFilterUpdated(String filter) {
+        setActiveFilter(filter);
     }
 
     public boolean clearFilter() {
@@ -35,8 +34,6 @@ public final class FilterController {
     }
 
     private void setActiveFilter(String filter) {
-        activeFilter = filter;
-
         ShowClocksFragmentController controller = findShowClocksController();
         if (controller != null) {
             controller.setFilter(filter);
